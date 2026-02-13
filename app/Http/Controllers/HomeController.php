@@ -9,13 +9,14 @@ use App\Models\DokumenSarjana;
 use App\Models\Kebijakan;
 use App\Models\Laporan;
 use App\Models\Visitor;
+use App\Models\Dosen;
+use App\Models\Footer;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
     public function index()
     {
-        // Ambil berita terbaru yang BUKAN kategori PMB (ID 1)
         $berita_carousel = Berita::where('id_kategori_kegiatan', '!=', 1)
             ->latest()
             ->take(2)
@@ -23,20 +24,20 @@ class HomeController extends Controller
 
         $berita = Berita::where('id_kategori_kegiatan', '!=', 1)
             ->latest()
-            ->take(3)
+            ->take(4)
             ->get();
 
-        // Ambil 1 berita terbaru khusus kategori PMB (ID 1)
         $popup_pmb = Berita::where('id_kategori_kegiatan', 1)
             ->latest()
             ->first();
 
-        // Catat kunjungan hari ini
+        $footer_terbaru = Footer::latest()->first();
+
         Visitor::firstOrCreate([
             'ip_address' => request()->ip(),
             'visit_date' => now()->toDateString(),
         ]);
-        return view('frontend.content.home', compact('berita', 'berita_carousel', 'popup_pmb'));
+        return view('frontend.content.home', compact('berita', 'berita_carousel', 'popup_pmb', 'footer_terbaru'));
     }
 
     public function detail($id)
@@ -65,8 +66,10 @@ class HomeController extends Controller
         return view('frontend.content.pernyataan');
     }
 
-    public function dosen(){
-        return view('frontend.content.dosen');
+    public function dosen()
+    {
+        $dosen = Dosen::with(['bimbingan1', 'bimbingan2'])->get();
+        return view('frontend.content.dosen', compact('dosen'));
     }
 
     public function tendik(){
@@ -93,7 +96,6 @@ class HomeController extends Controller
     public function unduhS1()
     {
         $dokumen = DokumenSarjana::latest()->paginate(5);
-
         return view('frontend.content.sarjana.unduh', compact('dokumen'));
     }
 
@@ -154,6 +156,14 @@ class HomeController extends Controller
         return view('frontend.content.fasilitas');
     }
 
+    public function asrama(){
+        return view('frontend.content.asrama');
+    }
+
+    public function faq(){
+        return view('frontend.content.faq');
+    }
+
     public function kebijakan()
     {
         $kebijakan = Kebijakan::latest()->paginate(5);
@@ -170,7 +180,7 @@ class HomeController extends Controller
     {
          $kumpulan = Berita::where('id_kategori_kegiatan', '!=', 1)
             ->latest()
-            ->paginate(10);
+            ->paginate(8);
 
         return view('frontend.content.kumpulan', compact('kumpulan'));
     }

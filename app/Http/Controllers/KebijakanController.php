@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Kebijakan;
+use App\Models\Laporan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -92,5 +93,19 @@ class KebijakanController extends Controller
         $kebijakan->delete();
 
         return redirect()->route('kebijakan.index')->with('success', 'Dokumen kebijakan SPMI berhasil dihapus');
+    }
+
+    // Tambahkan ini di dalam KebijakanController.php
+    public function unduhPublik($id)
+    {
+        $kebijakan = Kebijakan::findOrFail($id);
+        $path_file = storage_path('app/public/kebijakan_pdf/' . $kebijakan->path_file);
+
+        if (!file_exists($path_file)) {
+            abort(404, 'File Kebijakan tidak ditemukan');
+        }
+
+        // Menggunakan response()->file agar PDF terbuka di browser (preview)
+        return response()->file($path_file);
     }
 }

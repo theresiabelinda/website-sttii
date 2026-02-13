@@ -56,8 +56,8 @@
                                             <span class="badge bg-primary px-3 py-2">{{ $item->tahun }}</span>
                                         </td>
                                         <td class="px-4 text-center">
-                                            <a href="{{ route('storage.kebijakan_view', ['path' => $item->path_file]) }}" target="_blank" class="btn btn-sm btn-info">
-                                                <i class="fa fa-eye"></i> Unduh
+                                            <a href="{{ route('kebijakan.view_publik', $item->id) }}" class="btn btn-primary btn-sm" target="_blank">
+                                                <i class="fa fa-download"></i> Unduh
                                             </a>
 
                                         </td>

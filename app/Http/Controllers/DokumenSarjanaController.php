@@ -14,11 +14,6 @@ class DokumenSarjanaController extends Controller
         return view('backend.content.dokumen_sarjana.list', compact('data'));
     }
 
-    public function tambah()
-    {
-        return view('backend.content.dokumen_sarjana.formTambah');
-    }
-
     public function prosesTambah(Request $request)
     {
         $request->validate([

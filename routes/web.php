@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DosenController;
+use App\Http\Controllers\BimbinganController;
 use App\Http\Controllers\KategoriKegiatanController;
 use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\HomeController;
@@ -31,6 +33,11 @@ Route::get('/kebijakan', [HomeController::class, 'kebijakan'])->name('home.kebij
 Route::get('/laporan', [HomeController::class, 'laporan'])->name('home.laporan');
 Route::get('/berita/baca/{id}', [HomeController::class, 'detail'])->name('berita.baca');
 Route::get('/kumpulan', [HomeController::class, 'kumpulan'])->name('berita.kumpulan');
+Route::get('/faq', [HomeController::class, 'faq'])->name('home.faq');
+Route::get('/asrama', [HomeController::class, 'asrama'])->name('home.asrama');
+
+Route::get('/download-dokumen/{id}', [LaporanController::class, 'unduhPublik'])->name('laporan.unduh_publik');
+Route::get('/kebijakan/view/{id}', [KebijakanController::class, 'unduhPublik'])->name('kebijakan.view_publik');
 
 //Route untuk frontend S1
 Route::get('/profils1', [HomeController::class, 'profils1'])->name('home.profils1');
@@ -60,9 +67,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::prefix('admin')->group(function () {
 
         Route::get('/',[DashboardController::class,'index'])->name('dashboard.index');
+        Route::post('/prosesTambah',[DashboardController::class,'prosesTambah'])->name('dashboard.prosesTambah');
+        Route::get('/hapus/{id}',[DashboardController::class,'hapus'])->name('dashboard.hapus');
 
         Route::get('/kategori_kegiatan',[KategoriKegiatanController::class,'index'])->name('kategori_kegiatan.index');
-        Route::get('/kategori_kegiatan/tambah',[KategoriKegiatanController::class,'tambah'])->name('kategori_kegiatan.tambah');
         Route::post('/kategori_kegiatan/prosesTambah',[KategoriKegiatanController::class,'prosesTambah'])->name('kategori_kegiatan.prosesTambah');
         Route::get('/kategori_kegiatan/ubah/{id}',[KategoriKegiatanController::class,'ubah'])->name('kategori_kegiatan.ubah');
         Route::post('/kategori_kegiatan/prosesUbah',[KategoriKegiatanController::class,'prosesUbah'])->name('kategori_kegiatan.prosesUbah');
@@ -76,7 +84,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/berita/hapus/{id}',[BeritaController::class,'hapus'])->name('berita.hapus');
 
         Route::get('/dokumen_sarjana',[DokumenSarjanaController::class,'index'])->name('dokumen_sarjana.index');
-        Route::get('/dokumen_sarjana/tambah',[DokumenSarjanaController::class,'tambah'])->name('dokumen_sarjana.tambah');
         Route::post('/dokumen_sarjana/prosesTambah',[DokumenSarjanaController::class,'prosesTambah'])->name('dokumen_sarjana.prosesTambah');
         Route::get('/dokumen_sarjana/ubah/{id}',[DokumenSarjanaController::class,'ubah'])->name('dokumen_sarjana.ubah');
         Route::post('/dokumen_sarjana/prosesUbah',[DokumenSarjanaController::class,'prosesUbah'])->name('dokumen_sarjana.prosesUbah');
@@ -155,6 +162,17 @@ Route::group(['middleware' => 'auth'], function () {
             return response()->file($path_file);
         })->where('path', '.*')->name('storage.laporan_view');
 
+        Route::get('/dosen',[DosenController::class,'index'])->name('dosen.index');
+        Route::post('/dosen/prosesTambah',[DosenController::class,'prosesTambah'])->name('dosen.prosesTambah');
+        Route::get('/dosen/ubah/{id}',[DosenController::class,'ubah'])->name('dosen.ubah');
+        Route::post('/dosen/prosesUbah',[DosenController::class,'prosesUbah'])->name('dosen.prosesUbah');
+        Route::get('/dosen/hapus/{id}',[DosenController::class,'hapus'])->name('dosen.hapus');
+
+        Route::get('/bimbingan',[BimbinganController::class,'index'])->name('bimbingan.index');
+        Route::post('/bimbingan/prosesTambah',[BimbinganController::class,'prosesTambah'])->name('bimbingan.prosesTambah');
+        Route::get('/bimbingan/ubah/{id}',[BimbinganController::class,'ubah'])->name('bimbingan.ubah');
+        Route::post('/bimbingan/prosesUbah',[BimbinganController::class,'prosesUbah'])->name('bimbingan.prosesUbah');
+        Route::get('/bimbingan/hapus/{id}',[BimbinganController::class,'hapus'])->name('bimbingan.hapus');
     });
 
     Route::get('/logout',[AuthController::class,'logout'])->name('auth.logout');

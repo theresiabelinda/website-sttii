@@ -142,23 +142,6 @@
         </div>
     </div>
 
-    {{-- CALL TO ACTION --}}
-    <div class="container-xxl py-6">
-        <div class="container text-center">
-            <h1 class="display-6 mb-4">Butuh Informasi Lebih Lanjut?</h1>
-            <p class="mb-5 text-secondary">Silakan unduh pedoman beasiswa atau hubungi bagian administrasi kemahasiswaan kami.</p>
-
-            <div class="d-flex justify-content-center gap-3">
-                <a href="#" class="btn btn-primary py-3 px-5 rounded-pill shadow">
-                    <i class="fa fa-download me-2"></i> Unduh Pedoman
-                </a>
-                <a href="https://wa.me/6281326882170" target="_blank" class="btn btn-outline-primary py-3 px-5 rounded-pill shadow-sm">
-                    <i class="fab fa-whatsapp me-2"></i> Hubungi Kami
-                </a>
-            </div>
-        </div>
-    </div>
-
     {{-- STYLE CUSTOM --}}
     <style>
         .beasiswa-item {

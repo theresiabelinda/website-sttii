@@ -4,7 +4,12 @@
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
             <h4>Data Dokumen Prodi S1</h4>
-            <a href="{{ route('dokumen_sarjana.tambah') }}" class="btn btn-primary">Tambah Dokumen Prodi S1</a>
+
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalSarjana">
+                Tambah Dokumen
+            </button>
+
         </div>
         <div class="card-body">
             <table class="table table-bordered">
@@ -34,6 +39,38 @@
                 @endforeach
                 </tbody>
             </table>
+
+            <!-- Awal Modal Tambah -->
+            <div class="modal fade" id="modalSarjana" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel">Form Tambah Dokumen</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="POST" action="{{ route('dokumen_sarjana.prosesTambah') }}" enctype="multipart/form-data">
+                                @csrf
+                                <div class="form-group mb-3">
+                                    <label>Nama Dokumen/File</label>
+                                    <input type="text" name="nama_file" class="form-control" required>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label>File PDF</label>
+                                    <input type="file" name="file_pdf" class="form-control" accept=".pdf" required>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary">Simpan</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Akhir Modal Tambah -->
+
         </div>
     </div>
 @endsection

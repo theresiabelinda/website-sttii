@@ -35,25 +35,76 @@
             position: relative;
         }
 
+        /* Tampilan Default untuk Mobile (Turun ke bawah) */
         .dropdown-item.dropdown-submenu .submenu {
             display: none;
-            position: absolute;
-            right: 100%;
-            top: 0;
-            margin-top: -5px;
+            position: static; /* Berubah jadi statis agar turun ke bawah */
+            float: none;
+            width: 100%;
+            padding-left: 20px; /* Indentasi agar terlihat seperti anak menu */
+            background-color: #f8f9fa;
+            border: none;
+            box-shadow: none;
+        }
 
-            margin-right: -1px;
-
-            padding-right: 10px;
-
-            border-radius: 5px;
-            background: #fff;
-            box-shadow: 0 0 15px rgba(0,0,0,0.1);
-            min-width: 200px;
-            z-index: 1000;        /* Pastikan di atas elemen lain */
+        /* Tampilan Khusus Desktop (Layar Lebar) */
+        @media (min-width: 992px) {
+            .dropdown-item.dropdown-submenu .submenu {
+                display: none;
+                position: absolute;
+                left: 100%; /* Muncul di kanan */
+                top: 0;
+                margin-top: -5px;
+                margin-right: -1px;
+                min-width: 200px;
+                background: #fff;
+                box-shadow: 0 0 15px rgba(0,0,0,0.1);
+                z-index: 1000;
+            }
         }
         .dropdown-item.dropdown-submenu:hover > .submenu {
             display: block;
+        }
+
+        /*WA*/
+        .floating-wa {
+            position: fixed;
+            bottom: 20px;
+            right: 20px; /* Posisi kanan bawah */
+            background-color: #25d366;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+
+        .floating-wa img {
+            width: 25px;
+            margin-right: 10px;
+        }
+
+        .floating-wa:hover {
+            background-color: #128c7e;
+        }
+
+        .wa-widget-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+        }
+
+        .wa-widget-container .card {
+            transition: all 0.3s ease;
+        }
+
+        /* Menghilangkan outline biru saat tombol diklik */
+        .wa-widget-container .btn:focus {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3) !important;
         }
     </style>
 
@@ -87,7 +138,7 @@
             </div>
             <div class="h-100 d-inline-flex align-items-center mx-n2">
                 <a class="btn btn-square btn-link rounded-0 border-0 border-end border-secondary" href="https://www.youtube.com/@STTII"><i class="fab fa-youtube"></i></a>
-                <a class="btn btn-square btn-link rounded-0" href=""><i class="fab fa-instagram"></i></a>
+                <a class="btn btn-square btn-link rounded-0" href="https://www.instagram.com/sttii.jogja/"><i class="fab fa-instagram"></i></a>
             </div>
         </div>
     </div>
@@ -114,11 +165,11 @@
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <div class="navbar-nav ms-auto p-4 p-lg-0">
             <div class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">About Us</a>
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Tentang</a>
                 <div class="dropdown-menu bg-light m-0">
                     <a href="{{route('home.sambutan')}}" class="dropdown-item">Sambutan Ketua</a>
                     <a href="{{route('home.sejarah')}}" class="dropdown-item">Sejarah</a>
-                    <a href="{{route('home.visimisi')}}" class="dropdown-item">Visi, Misi, Tujuan, Sasaran</a>
+                    <a href="{{route('home.visimisi')}}" class="dropdown-item">Visi, Misi, Tujuan, Strategi</a>
                     <a href="{{route('home.kriteria')}}" class="dropdown-item">Kriteria Pendidikan</a>
                     <a href="{{route('home.pernyataan')}}" class="dropdown-item">Pernyataan Doktrinal</a>
                     <a href="https://yayasanimanindonesia.or.id/" class="dropdown-item">Yayasan Iman Indonesia</a>
@@ -170,27 +221,21 @@
             </div>
 
             <div class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Penelitian</a>
-                <div class="dropdown-menu bg-light m-0">
-                    <a href="https://pistis.sttii-yogyakarta.ac.id/" class="dropdown-item">Jurnal Pistis: Teologi dan Praktika</a>
-                    <a href="https://www.ejournal.sttii-yogyakarta.ac.id/" class="dropdown-item">Jurnal Predica Verbum: Jurnal Teologi & Misi</a>
-                </div>
-            </div>
-
-            <div class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">SPMI</a>
-                <div class="dropdown-menu bg-light m-0">
-                    <a href="{{route('home.laporan')}}" class="dropdown-item">Laporan</a>
-                    <a href="{{route('home.kebijakan')}}" class="dropdown-item">Dokumen Kebijakan</a>
-                </div>
-            </div>
-
-            <div class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Kehidupan Kampus</a>
                 <div class="dropdown-menu bg-light m-0">
-                    <a href="{{route('home.beasiswa')}}" class="dropdown-item">Beasiswa</a>
+                    <a href="{{route('berita.kumpulan')}}" class="dropdown-item">Kegiatan Kampus</a>
                     <a href="{{route('home.fasilitas')}}" class="dropdown-item">Fasilitas</a>
                     <a href="https://semasttiijogja.site/" class="dropdown-item">Senat Mahasiswa</a>
+                </div>
+            </div>
+
+            <div class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pendaftaran</a>
+                <div class="dropdown-menu bg-light m-0">
+                    <a href="#" class="dropdown-item">Pendaftaran Mahasiswa Baru</a>
+                    <a href="{{route('home.beasiswa')}}" class="dropdown-item">Beasiswa</a>
+                    <a href="{{route('home.asrama')}}" class="dropdown-item">Asrama</a>
+                    <a href="{{route('home.faq')}}" class="dropdown-item">Frequently Asked Questions (FAQ)</a>
                 </div>
             </div>
 
@@ -199,23 +244,29 @@
                 <div class="dropdown-menu bg-light m-0">
                     <a href="https://tracerstudy.kemdiktisaintek.go.id/" class="dropdown-item">Tracer Study</a>
                     <a href="appointment.html" class="dropdown-item">Ikatan Alumni</a>
+                    <a href="#" class="dropdown-item">Cerita Alumni</a>
                 </div>
             </div>
 
             <div class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Quick Access</a>
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Penelitian</a>
+                <div class="dropdown-menu bg-light m-0">
+                    <a href="https://pistis.sttii-yogyakarta.ac.id/" class="dropdown-item">Jurnal Pistis: Teologi dan Praktika</a>
+                    <a href="https://www.ejournal.sttii-yogyakarta.ac.id/" class="dropdown-item">Jurnal Predica Verbum: Jurnal Teologi & Misi</a>
+                </div>
+            </div>
+
+            <div class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Akses Cepat</a>
                 <div class="dropdown-menu bg-light m-0">
                     <a href="https://student.sttii-yogyakarta.ac.id/" class="dropdown-item">SIAKAD Mahasiswa</a>
                     <a href="https://lecturer.sttii-yogyakarta.ac.id/" class="dropdown-item">SIAKAD Dosen</a>
                     <a href="https://sttii-jogjakarta.jamitu.id" class="dropdown-item">LPMI</a>
                     <a href="https://lppm.sttii-yogyakarta.ac.id/" class="dropdown-item">LPPM</a>
+                    <a href="https://spada.kemdiktisaintek.go.id/" class="dropdown-item">SPADA</a>
                     <a href="https://elearning.sttii-yogyakarta.ac.id/" class="dropdown-item">E-Learning</a>
                     <a href="https://epustaka.sttii-yogyakarta.ac.id/" class="dropdown-item">E-Pustaka</a>
                 </div>
-            </div>
-                <a href="{{route('auth.index')}}" class="btn btn-primary py-4 px-lg-4 d-none d-lg-block">Login<i class="fa fa-arrow-right ms-3"></i></a>
-
-            </div>
        </div>
 </nav>
 <!-- Navbar End -->
@@ -226,74 +277,128 @@
 
 
 <!-- Footer Start -->
-{{-- Mengubah py-6 menjadi py-3 agar kotak footer lebih pendek --}}
-<div class="container-fluid bg-dark text-light footer mt-5 py-4 wow fadeIn" data-wow-delay="0.1s">
-    <div class="container">
-        {{-- Mengubah g-5 menjadi g-4 agar jarak antar kolom lebih rapat --}}
-        <div class="row g-4">
+<div class="container-fluid bg-light text-dark footer mt-5 pt-5 wow fadeIn" data-wow-delay="0.1s" style="border-top: 3px solid #dee2e6;">
+    <div class="container py-5">
+        <div class="row g-5">
+            {{-- KOLOM 1: LOGO & ABOUT --}}
+            <div class="col-lg-4 col-md-6 text-center text-md-start">
+                <img src="{{ asset('assets/assets/img/logo.png') }}" alt="Logo STTII" class="mb-3" style="height: 80px;">
+                <h5 class="fw-bold text-uppercase mb-3">STTII Yogyakarta</h5>
+                <p class="small text-muted mb-4" style="text-align: justify; line-height: 1.6;">
+                    Sekolah Tinggi Teologi Injili Indonesia (STTII) Yogyakarta berkomitmen untuk melahirkan hamba Tuhan yang setia, suci, dan sarjana bagi kemuliaan nama Tuhan di gereja dan masyarakat.
+                </p>
+                <div class="d-flex justify-content-center justify-content-md-start">
+                    <a class="btn btn-outline-dark btn-sm me-2" href="https://www.youtube.com/@STTII"><i class="fab fa-youtube"></i></a>
+                    <a class="btn btn-outline-dark btn-sm me-2" href="https://www.instagram.com/sttii.jogja/"><i class="fab fa-instagram"></i></a>
+                    <a class="btn btn-outline-dark btn-sm" href=""><i class="fab fa-facebook-f"></i></a>
+                </div>
+            </div>
 
-            {{-- KOLOM 1: CONTACT US --}}
+            {{-- KOLOM 2: QUICK LINKS & MOU --}}
             <div class="col-lg-4 col-md-6">
-                {{-- Mengubah h4 jadi h5 dan mb-4 jadi mb-3 agar lebih ringkas --}}
-                <h5 class="text-white mb-3">Contact Us</h5>
-                <p class="mb-2 text-white-50 small">
-                    <i class="fa fa-map-marker-alt me-3"></i>Jl. Solo Km. 11,1 PO.BOX 4/YKAP, Kalasan Yogyakarta - Indonesia
-                </p>
-                <p class="mb-2 text-white-50 small">
-                    <i class="fa fa-phone-alt me-3"></i><strong>Call Now:</strong> (0274) 496257
-                </p>
-                <p class="mb-2 text-white-50 small">
-                    <i class="fa fa-envelope me-3"></i>
-                    <a href="mailto:humas@sttii-yogyakarta.ac.id" class="text-white-50 text-decoration-none">humas@sttii-yogyakarta.ac.id</a>
-                </p>
-            </div>
+                <h5 class="fw-bold mb-3 border-bottom pb-2">Link Cepat</h5>
+                {{-- Jarak antar link diperpendek dengan g-2 dan padding kecil --}}
+                <div class="row g-2">
+                    <div class="col-6">
+                        <a class="btn btn-link text-dark small p-0 mb-1 d-block" href="{{route('home.kebijakan')}}">Kebijakan SPMI</a>
+                        <a class="btn btn-link text-dark small p-0 mb-1 d-block" href="{{route('home.laporan')}}">Laporan SPMI</a>
+                        <a class="btn btn-link text-dark small p-0 mb-1 d-block" href="{{route('berita.kumpulan')}}">Berita</a>
+                    </div>
+                    <div class="col-6">
+                        <a class="btn btn-link text-dark small p-0 mb-1 d-block" href="">Biro Adak</a>
+                        <a class="btn btn-link text-dark small p-0 mb-1 d-block" href="">P3S</a>
+                        <a class="btn btn-link text-dark small p-0 mb-1 d-block" href="">Pusdatin</a>
+                    </div>
+                </div>
 
-            {{-- KOLOM 2: MOU & LOGO (Posisi Tengah) --}}
-            <div class="col-lg-4 col-md-6 text-center">
-                <h5 class="text-white mb-3">Memorandum of Understanding with</h5>
-
-                {{-- Area Logo: gap dikurangi jadi gap-3, mb dikurangi jadi mb-2 --}}
-                <div class="d-flex align-items-center justify-content-center gap-3 mb-2">
-                    {{-- Logo 1 (Dikecilkan max-width nya) --}}
-                    <img src="{{ asset('assets-fe/img/dalas.png') }}" alt="Dalas" style="max-width: 70px; height: auto;">
-
-                    {{-- Logo 2 --}}
-                    <img src="{{ asset('assets-fe/img/biola.png') }}" alt="Biola Univ" style="max-width: 100px; height: auto;">
-
-                    {{-- Logo 3 --}}
-                    <img src="{{ asset('assets-fe/img/tmai.jpeg') }}" alt="TMAI" style="max-width: 70px; height: auto;">
+                {{-- Bagian MOU dibuat lebih besar --}}
+                <h5 class="fw-bold mt-4 mb-3 border-bottom pb-2 small text-uppercase">Memorandum of Understanding with</h5>
+                <div class="d-flex align-items-center flex-wrap gap-4">
+                    <img src="{{ asset('assets-fe/img/dalas.png') }}" alt="Dalas" style="height: 50px; width: auto;">
+                    <img src="{{ asset('assets-fe/img/biola.png') }}" alt="Biola" style="height: 55px; width: auto;">
+                    <img src="{{ asset('assets-fe/img/tmai.jpeg') }}" alt="TMAI" style="height: 50px; width: auto;">
                 </div>
             </div>
 
-            {{-- KOLOM 3: AKSES CEPAT (Posisi Kanan) --}}
-            <div class="col-lg-4 col-md-6 text-lg-end">
-                <h5 class="text-white mb-3">Pelayanan</h5>
-                <div class="d-flex flex-column justify-content-lg-end align-items-lg-end">
-                    {{-- Menambahkan class small agar font lebih kecil --}}
-                    <a class="btn btn-link text-white-50 text-decoration-none mb-1 small p-0" href="">Biro Adak</a>
-                    <a class="btn btn-link text-white-50 text-decoration-none mb-1 small p-0" href="">P3S</a>
-                    <a class="btn btn-link text-white-50 text-decoration-none small p-0" href="">Pusdatin</a>
+            {{-- KOLOM 3: CONTACT INFO --}}
+            <div class="col-lg-4 col-md-6">
+                <h5 class="fw-bold mb-3 border-bottom pb-2">Contact</h5>
+                <div class="d-flex mb-2">
+                    <i class="fa fa-map-marker-alt text-primary me-3 mt-1"></i>
+                    <p class="small mb-0 text-muted">
+                        Jl. Sala KM 11.5, PO.BOX 4/YKAP, Kalasan,<br>
+                        Sleman, DIY - Indonesia 55571
+                    </p>
                 </div>
+                <div class="d-flex mb-2">
+                    <i class="fa fa-phone-alt text-primary me-3"></i>
+                    <p class="small mb-0 text-muted">(0274) 496257</p>
+                </div>
+                <div class="d-flex mb-3">
+                    <i class="fa fa-envelope text-primary me-3"></i>
+                    <p class="small mb-0 text-muted">humas@sttii-yogyakarta.ac.id</p>
+                </div>
+                <a href="{{route('auth.index')}}" class="btn btn-warning fw-bold btn-sm mt-2 px-4 shadow-sm">Portal Login</a>
             </div>
-
         </div>
     </div>
-</div>
-<!-- Footer End -->
 
-
-<!-- Copyright Start -->
-<div class="container-fluid copyright text-light py-2 wow fadeIn" data-wow-delay="0.1s">
-    <div class="container">
-        <div class="row">
-            {{-- Tambahkan class 'small' agar huruf lebih kecil --}}
-            <div class="col-md-6 text-center text-md-start mb-1 mb-md-0 small">
-                &copy; <a href="#">STTII Yogyakarta</a>, All Right Reserved.
+    {{-- COPYRIGHT --}}
+    <div class="container-fluid py-4" style="background: #f1f1f1; border-top: 1px solid #e0e0e0;">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center text-md-start small text-muted">
+                    &copy; 2026 <strong>STTII Yogyakarta</strong>. All Rights Reserved.
+                </div>
+                <div class="col-md-6 text-center text-md-end mt-2 mt-md-0">
+                    <small class="text-uppercase fw-bold" style="letter-spacing: 1px; color: #003366;">@STTIIYogyakarta</small>
+                </div>
             </div>
         </div>
     </div>
 </div>
 <!-- Copyright End -->
+
+{{--    WhatsApp--}}
+<div class="wa-widget-container">
+    <div class="collapse mb-3" id="waMenu">
+        <div class="card shadow-lg border-0" style="width: 300px; border-radius: 15px; overflow: hidden;">
+            <div class="card-header bg-success text-white p-3">
+                <h6 class="mb-1">Our support team is here!</h6>
+                <small>Ask us anything!</small>
+            </div>
+            <div class="list-group list-group-flush">
+                <a href="https://wa.me/6285741322565" target="_blank" class="list-group-item list-group-item-action d-flex align-items-center p-3">
+                    <img src="{{ asset('assets/assets/img/logo.png') }}" width="30" class="me-3">
+                    <div>
+                        <div class="fw-bold">Pendaftaran S1</div>
+                        <small class="text-success">Online</small>
+                    </div>
+                </a>
+                <a href="https://wa.me/6281382833288" target="_blank" class="list-group-item list-group-item-action d-flex align-items-center p-3">
+                    <img src="{{ asset('assets/assets/img/logo.png') }}" width="30" class="me-3">
+                    <div>
+                        <div class="fw-bold">Pendaftaran S2</div>
+                        <small class="text-success">Online</small>
+                    </div>
+                </a>
+                <a href="https://wa.me/6281390320691" target="_blank" class="list-group-item list-group-item-action d-flex align-items-center p-3">
+                    <img src="{{ asset('assets/assets/img/logo.png') }}" width="30" class="me-3">
+                    <div>
+                        <div class="fw-bold">Pendaftaran S3</div>
+                        <small class="text-success">Online</small>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <button class="btn btn-success rounded-pill shadow-lg d-flex align-items-center px-4 py-2 float-end"
+            type="button" data-bs-toggle="collapse" data-bs-target="#waMenu" aria-expanded="false">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="25" class="me-2">
+        Hi, how can I help?
+    </button>
+</div>
 
 
 <!-- Back to Top -->

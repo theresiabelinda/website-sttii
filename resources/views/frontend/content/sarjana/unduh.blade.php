@@ -62,7 +62,9 @@
                                                 <i class="far fa-calendar-alt me-2"></i>{{ $item->created_at->format('d M Y') }}
                                             </td>
                                             <td class="text-center">
-                                                <a href="{{ route('storage.sarjana_view', ['path' => $item->path_file]) }}" target="_blank" class="btn btn-sm btn-info text-white px-3 shadow-sm">
+                                                <a href="{{ route('storage.sarjana_view', ['path' => $item->path_file]) }}"
+                                                   target="_blank"
+                                                   class="btn btn-sm btn-info text-white px-3 shadow-sm">
                                                     <i class="fa fa-eye me-1"></i> Unduh
                                                 </a>
                                             </td>

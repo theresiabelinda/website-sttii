@@ -92,4 +92,17 @@ class LaporanController extends Controller
 
         return redirect()->route('laporan.index')->with('success', 'Dokumen laporan SPMI berhasil dihapus');
     }
+
+    public function unduhPublik($id)
+    {
+        $laporan = Laporan::findOrFail($id);
+        $path_file = storage_path('app/public/laporan_pdf/' . $laporan->path_file);
+
+        if (!file_exists($path_file)) {
+            abort(404, 'File tidak ditemukan');
+        }
+
+        // Menggunakan file() agar terbuka di browser (PDF preview)
+        return response()->file($path_file);
+    }
 }

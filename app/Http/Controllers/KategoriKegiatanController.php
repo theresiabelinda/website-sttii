@@ -13,10 +13,6 @@ class KategoriKegiatanController extends Controller
         return view('backend.content.kategori_kegiatan.list', compact('kategori_kegiatan'));
     }
 
-    public function tambah(){
-        return view('backend.content.kategori_kegiatan.formTambah');
-    }
-
     public function prosesTambah(Request $request){
         $this->validate($request, [
             'nama_kategori_kegiatan' => 'required'

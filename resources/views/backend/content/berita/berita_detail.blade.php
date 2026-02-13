@@ -1,4 +1,4 @@
-@extends('layouts.frontend') {{-- GANTI dengan nama file layout utama website Anda --}}
+@extends('layouts.frontend')
 
 @section('content')
     <div class="container-xxl py-6">

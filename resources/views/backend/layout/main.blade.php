@@ -70,16 +70,35 @@
                     </a>
 
                     <!-- BUKAN DROPDOWN -->
-                    <a class="nav-link" href="#">
-                        <div class="sb-nav-link-icon"><i class="fas fa-university"></i></div>
-                        Menu PMB
-                    </a>
-
-                    <!-- BUKAN DROPDOWN -->
                     <a class="nav-link" href="{{route('berita.index')}}">
                         <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                         Tampilan Berita
                     </a>
+
+                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                       data-bs-target="#collapseDosen" aria-expanded="false"
+                       aria-controls="collapseDosen">
+                        <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
+                        Operasional
+                        <div class="sb-sidenav-collapse-arrow">
+                            <i class="fas fa-angle-down"></i>
+                        </div>
+                    </a>
+
+                    <div class="collapse" id="collapseDosen" data-bs-parent="#sidenavAccordion">
+                        <nav class="sb-sidenav-menu-nested nav">
+                            <a class="nav-link" href="{{route('dosen.index')}}">
+                                Data Dosen
+                            </a>
+                            <a class="nav-link" href="{{route('bimbingan.index')}}">
+                                Bimbingan Disertasi
+                            </a>
+                            <a class="nav-link" href="#">
+                                Data Tendik
+                            </a>
+                        </nav>
+                    </div>
+
                     <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
                        data-bs-target="#collapseAnggaran" aria-expanded="false"
                        aria-controls="collapseAnggaran">
@@ -93,13 +112,13 @@
                     <div class="collapse" id="collapseAnggaran" data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
                             <a class="nav-link" href="{{route('dokumen_sarjana.index')}}">
-                                Dokumen Prodi Sarjana
+                                Dokumen S1
                             </a>
                             <a class="nav-link" href="{{route('dokumen_magister.index')}}">
-                                Dokumen Prodi Magister
+                                Dokumen S2
                             </a>
                             <a class="nav-link" href="{{route('dokumen_doktor.index')}}">
-                                Dokumen Prodi Doktor
+                                Dokumen S3
                             </a>
                         </nav>
                     </div>

@@ -57,7 +57,7 @@
                                             <span class="badge bg-primary px-3 py-2">{{ $item->tahun }}</span>
                                         </td>
                                         <td class="px-4 text-center">
-                                            <a href="{{ route('storage.laporan_view', ['path' => $item->path_file]) }}" target="_blank" class="btn btn-sm btn-info">
+                                            <a href="{{ route('laporan.unduh_publik', $item->id) }}" class="btn btn-info btn-sm" target="_blank">
                                                 <i class="fa fa-eye"></i> Unduh
                                             </a>
 

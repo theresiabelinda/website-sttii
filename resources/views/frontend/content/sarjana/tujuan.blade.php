@@ -134,7 +134,7 @@
                     {{-- Tambahkan bg-white atau bg-light agar area kosong terlihat rapi --}}
                     <div class="position-relative h-100 bg-white d-flex align-items-center justify-content-center">
                         {{-- Ganti 'cover' menjadi 'contain'. Hapus absolute dan w/h-100 --}}
-                        <img class="img-fluid" style="max-height: 100%; object-fit: contain;" src="{{ asset('assets-fe/img/profil2.jpg') }}" alt="">
+                        <img class="img-fluid" style="max-height: 100%; object-fit: contain;" src="{{ asset('assets-fe/img/profil3.jpeg') }}" alt="">
                     </div>
                 </div>
             </div>
