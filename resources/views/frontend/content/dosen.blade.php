@@ -63,7 +63,7 @@
 
             {{-- MODAL DETAIL --}}
             <div class="modal fade" id="dosenModal" tabindex="-1" aria-hidden="true">
-                <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
                     <div class="modal-content">
                         <div class="modal-header border-0">
                             <h5 class="modal-title">Profil Lengkap Dosen</h5>
@@ -102,6 +102,20 @@
                                             </tr>
                                             </thead>
                                             <tbody id="modal-bimbingan-list" class="small">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <h7 class="text-uppercase text-primary mb-3">Publikasi & Karya Ilmiah</h7>
+                                    <div class="table-responsive">
+                                        <table class="table table-sm table-hover">
+                                            <thead>
+                                            <tr class="small">
+                                                <th>Judul Karya</th>
+                                                <th class="text-center">Tipe / Tahun</th>
+                                                <th class="text-center">Link</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="modal-karya-list" class="small">
                                             </tbody>
                                         </table>
                                     </div>
@@ -158,6 +172,40 @@
             listBody.innerHTML = '<tr><td colspan="3" class="text-center text-muted">Belum ada data bimbingan.</td></tr>';
         }
 
+        // --- 6. DATA BUKU & JURNAL (BAGIAN BARU) ---
+        const karyaBody = document.getElementById('modal-karya-list');
+        karyaBody.innerHTML = ''; // Reset list dulu
+
+        // Cek apakah data buku_jurnal ada (pastikan namanya sama dengan relasi di Model)
+        if(data.buku_jurnal && data.buku_jurnal.length > 0) {
+            data.buku_jurnal.forEach(item => {
+                let badgeClass = item.tipe === 'buku' ? 'bg-info' : (item.tipe === 'jurnal' ? 'bg-success' : 'bg-secondary');
+
+                let linkButton = item.link
+                    ? `<a href="${item.link}" target="_blank" class="btn btn-xs btn-primary py-0 px-2" style="font-size: 10px;">Buka</a>`
+                    : '<span class="text-muted">-</span>';
+
+                karyaBody.innerHTML += `
+                    <tr>
+                        <td>
+                            <div class="fw-bold text-dark">${item.judul}</div>
+                            ${item.penerbit ? `<small class="text-muted">Penerbit: ${item.penerbit}</small>` : ''}
+                        </td>
+                        <td class="text-center">
+                            <span class="badge ${badgeClass} text-white" style="font-size: 10px;">${item.tipe.toUpperCase()}</span>
+                            <br><small class="fw-bold">${item.tahun}</small>
+                        </td>
+                        <td class="text-center align-middle">
+                            ${linkButton}
+                        </td>
+                    </tr>
+                `;
+            });
+        } else {
+            karyaBody.innerHTML = '<tr><td colspan="3" class="text-center text-muted">Belum ada data publikasi ilmiah.</td></tr>';
+        }
+
+        // --- 7. TAMPILKAN MODAL ---
         var myModal = new bootstrap.Modal(document.getElementById('dosenModal'));
         myModal.show();
     }
@@ -173,5 +221,10 @@
     }
     .custom-card:hover .text-primary {
         color: #0056b3 !important;
+    }
+    @media (min-width: 1200px) {
+        .modal-xl {
+            max-width: 90%; /* Mengubah lebar dari default Bootstrap (1140px) menjadi 90% layar */
+        }
     }
 </style>

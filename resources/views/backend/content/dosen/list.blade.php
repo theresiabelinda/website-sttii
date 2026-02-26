@@ -18,18 +18,15 @@
         @if(session()->has('pesan'))
             <div class="alert alert-{{session()->get('pesan')[0]}} alert-dismissible fade show border-0 shadow-sm" role="alert">
                 <i class="fas fa-info-circle mr-2"></i> {{session()->get('pesan')[1]}}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
             </div>
         @endif
 
-        <div class="card shadow border-0 overflow-hidden">
+        <div class="card shadow border-0 overflow-hidden" style="border-radius: 15px;">
             <div class="card-body p-0">
                 <div class="table-responsive">
                     <table class="table table-hover mb-0">
-                        <thead class="bg-light">
-                        <tr class="text-dark">
+                        <thead style="background: linear-gradient(90deg, #5a67d8 0%, #4c51bf 100%); color: white;">
+                        <tr>
                             <th class="border-0 py-3 text-center" width="50">#</th>
                             <th class="border-0 py-3">Informasi Dosen</th>
                             <th class="border-0 py-3">Kontak & Identitas</th>
@@ -83,11 +80,26 @@
                                 </td>
                                 <td class="text-center align-middle">
                                     <div class="btn-group shadow-sm">
-                                        <a href="{{ route('dosen.ubah', $row->id) }}" class="btn btn-white btn-sm border" title="Edit">
-                                            <i class="fa fa-edit text-warning"></i>
-                                        </a>
-                                        <a href="{{ route('dosen.hapus', $row->id) }}" class="btn btn-white btn-sm border" onclick="return confirm('Hapus data dosen ini?')" title="Delete">
-                                            <i class="fa fa-trash text-danger"></i>
+                                        <button type="button"
+                                                class="btn btn-sm btn-warning shadow-sm edit-button"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#modalEditDosen"
+                                                data-id="{{ $row->id }}"
+                                                data-nama="{{ $row->nama_lengkap }}"
+                                                data-nidn="{{ $row->nidn }}"
+                                                data-nuptk="{{ $row->nuptk }}"
+                                                data-email="{{ $row->email }}"
+                                                data-s1="{{ $row->pendidikan_s1 }}"
+                                                data-s2="{{ $row->pendidikan_s2 }}"
+                                                data-s3="{{ $row->pendidikan_s3 }}"
+                                                data-scholar="{{ $row->link_scholar }}"
+                                                data-sinta="{{ $row->link_sinta }}">
+                                            <i class="fa fa-edit"></i>
+                                        </button>
+
+                                        <a href="{{ route('dosen.hapus', $row->id) }}"
+                                           class="btn btn-sm btn-danger btn-delete" title="Hapus">
+                                            <i class="fa fa-trash"></i>
                                         </a>
                                     </div>
                                 </td>
@@ -193,6 +205,77 @@
                     </div>
                     <!-- Akhir Modal Tambah -->
 
+                    <!-- Awal Modal Ubah -->
+                    <div class="modal fade" id="modalEditDosen" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content border-0 shadow">
+                                <div class="modal-header">
+                                    <h5 class="modal-title font-weight-bold"><i class="fas fa-user-edit mr-2"></i> Edit Data Dosen</h5>
+                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <form method="POST" id="formEditDosen" enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="modal-body">
+                                        <input type="hidden" name="id" id="edit_id">
+
+                                        <div class="row">
+                                            <div class="col-md-6 mb-3">
+                                                <label class="font-weight-bold">Nama Lengkap</label>
+                                                <input type="text" name="nama_lengkap" id="edit_nama" class="form-control" required>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label class="font-weight-bold">Email</label>
+                                                <input type="email" name="email" id="edit_email" class="form-control" required>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6 mb-3">
+                                                <label class="font-weight-bold">NIDN</label>
+                                                <input type="text" name="nidn" id="edit_nidn" class="form-control">
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label class="font-weight-bold">NUPTK</label>
+                                                <input type="text" name="nuptk" id="edit_nuptk" class="form-control">
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-4 mb-3">
+                                                <label class="font-weight-bold">S1</label>
+                                                <input type="text" name="pendidikan_s1" id="edit_s1" class="form-control">
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label class="font-weight-bold">S2</label>
+                                                <input type="text" name="pendidikan_s2" id="edit_s2" class="form-control">
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <label class="font-weight-bold">S3</label>
+                                                <input type="text" name="pendidikan_s3" id="edit_s3" class="form-control">
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6 mb-3">
+                                                <label class="font-weight-bold">Google Scholar Link</label>
+                                                <input type="url" name="link_scholar" id="edit_scholar" class="form-control">
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label class="font-weight-bold">SINTA Link</label>
+                                                <input type="url" name="link_sinta" id="edit_sinta" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer bg-light">
+                                        <button type="submit" class="btn btn-warning font-weight-bold px-4">Update</button>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Akhir Modal Ubah -->
+
                 </div>
             </div>
 
@@ -210,23 +293,113 @@
     </div>
 
     <style>
-        /* Styling Tabel */
-        .table thead th { font-size: 0.8rem; letter-spacing: 0.05em; text-transform: uppercase; border-bottom: 2px solid #f8f9fc !important; }
-        .table tbody tr { transition: all 0.2s; }
-        .table tbody tr:hover { background-color: rgba(78, 115, 223, 0.03); }
+        .table thead th {
+            color: white !important;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
 
-        /* Soft Badges */
-        .badge-primary-soft { background-color: #eef2ff; color: #4e73df; padding: 5px 10px; border-radius: 5px; }
-        .badge-secondary-soft { background-color: #f8f9fc; color: #858796; border: 1px solid #e3e6f0; padding: 5px 10px; border-radius: 5px; }
+        .table thead th {
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            border-bottom: 2px solid #f8f9fc !important;
+        }
 
-        /* Buttons */
+        .table tbody tr {
+            transition: all 0.2s;
+        }
+
+        .table tbody tr:hover {
+            background-color: rgba(78, 115, 223, 0.03);
+        }
+
+        .badge-primary-soft {
+            background-color: #eef2ff;
+            color: #4e73df;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        .badge-secondary-soft {
+            background-color: #f8f9fc;
+            color: #858796;
+            border: 1px solid #e3e6f0;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
         .btn-white { background: #fff; }
-        .btn-white:hover { background: #f8f9fa; border-color: #ccc; }
-        .education-info div { line-height: 1.5; }
 
-        /* Pagination Styling */
+        .btn-white:hover {
+            background: #f8f9fa;
+            border-color: #ccc; }
+        .education-info div { line-height: 1.5;
+        }
+
         .pagination { margin-bottom: 0; }
-        .page-item.active .page-link { background-color: #4e73df; border-color: #4e73df; }
+
+        .page-item.active .page-link {
+            background-color: #4e73df;
+            border-color: #4e73df;
+        }
         .page-link { color: #4e73df; }
     </style>
+
+    <script>
+        // SweetAlert Delete
+        const deleteButtons = document.querySelectorAll('.btn-delete');
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', function (e) {
+                e.preventDefault();
+                const href = this.getAttribute('href');
+                Swal.fire({
+                    title: 'Hapus Data?',
+                    text: "Data ini akan dihapus permanen!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#e74a3b',
+                    cancelButtonColor: '#858796',
+                    confirmButtonText: 'Ya, Hapus!',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed) window.location.href = href;
+                });
+            });
+        });
+
+        // Ajax Ubah
+        document.addEventListener('DOMContentLoaded', function () {
+            const editButtons = document.querySelectorAll('.edit-button');
+            const formEdit = document.getElementById('formEditDosen');
+
+            editButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const id      = this.getAttribute('data-id');
+                    const nama    = this.getAttribute('data-nama');
+                    const nidn    = this.getAttribute('data-nidn');
+                    const nuptk   = this.getAttribute('data-nuptk');
+                    const email   = this.getAttribute('data-email');
+                    const s1      = this.getAttribute('data-s1');
+                    const s2      = this.getAttribute('data-s2');
+                    const s3      = this.getAttribute('data-s3');
+                    const scholar = this.getAttribute('data-scholar');
+                    const sinta   = this.getAttribute('data-sinta');
+
+                    document.getElementById('edit_id').value = id;
+                    document.getElementById('edit_nama').value = nama;
+                    document.getElementById('edit_nidn').value = nidn;
+                    document.getElementById('edit_nuptk').value = nuptk;
+                    document.getElementById('edit_email').value = email;
+                    document.getElementById('edit_s1').value = s1;
+                    document.getElementById('edit_s2').value = s2;
+                    document.getElementById('edit_s3').value = s3;
+                    document.getElementById('edit_scholar').value = scholar;
+                    document.getElementById('edit_sinta').value = sinta;
+
+                    formEdit.action = `{{ route('dosen.prosesUbah') }}`;
+                });
+            });
+        });
+    </script>
 @endsection

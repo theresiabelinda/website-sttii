@@ -49,13 +49,6 @@ class BimbinganController extends Controller
         }
     }
 
-    public function ubah($id) {
-        $bimbingan = Bimbingan::findOrFail($id);
-        $dosen = Dosen::orderBy('nama_lengkap', 'asc')->get();
-
-        return view('backend.content.bimbingan.formUbah', compact('bimbingan', 'dosen'));
-    }
-
     public function prosesUbah(Request $request) {
         $request->validate([
             'id'              => 'required',

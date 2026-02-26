@@ -86,6 +86,26 @@
     </div>
     <!-- About End -->
 
+    {{--                BAGIAN HEADER--}}
+    <div class="row wow fadeInUp" data-wow-delay="0.2s" style="margin-left: calc(-50vw + 50%); margin-right: calc(-50vw + 50%); width: 100vw; position: relative; left: 0;">
+        <div class="col-12 p-0">
+            <div class="position-relative w-100">
+                @if($header_terbaru && $header_terbaru->foto)
+                    <img class="img-fluid w-100"
+                         src="{{ asset('uploads/header/' . $header_terbaru->foto) }}"
+                         alt="foto_header"
+                         style="display: block; width: 100vw; object-fit: cover; height: auto;">
+                @else
+                    <div class="d-flex align-items-center justify-content-center bg-light" style="width: 100vw; height: 300px;">
+                        <h3 class="text-muted fw-bold">
+                            <i class="fas fa-info-circle me-2"></i> Belum ada kegiatan terbaru
+                        </h3>
+                    </div>
+                @endif
+            </div>
+        </div>
+    </div>
+
 {{--    Program Studi--}}
     <div class="container-xxl py-6">
         <div class="container">
@@ -227,6 +247,7 @@
             </div>
         </div>
     </div>
+
     <style>
         /* Tombol Kuning */
         .btn-cta-yellow {
@@ -270,7 +291,7 @@
         }
     </style>
 
-    <!-- Courses Start -->
+    <!-- Awal FE Berita -->
     <div class="container-xxl py-6 bg-light">
         <div class="container">
             <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 800px;">
@@ -307,7 +328,59 @@
                     </div>
                 @endforeach
             </div>
+            <div class="text-center mt-5 wow fadeInUp" data-wow-delay="0.1s">
+                <a href="{{route('berita.kumpulan')}}" class="btn btn-primary py-3 px-5 rounded-pill shadow">
+                    Lihat Semua Berita <i class="fa fa-chevron-right ms-2"></i>
+                </a>
+            </div>
         </div>
+    </div>
+
+{{--    Cerita Alumni--}}
+    <div class="container-xxl py-6">
+        <div class="container">
+            <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 800px;">
+                <h6 class="text-primary text-uppercase mb-2" style="letter-spacing: 3px;">What they say?</h6>
+                <h1 class="display-6 mb-4">Cerita <span class="text-primary">Alumni</span></h1>
+            </div>
+
+            <div class="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.1s">
+                @foreach($cerita as $item)
+                    <div class="testimonial-item bg-white shadow-sm border rounded-3 p-4 m-2 text-center">
+                        <div class="mb-4">
+                            <img class="img-fluid rounded-circle mx-auto border border-3 border-primary p-1"
+                                 src="{{ asset('storage/uploads/cerita/' . $item->foto) }}"
+                                 style="width: 120px; height: 120px; object-fit: cover;">
+
+                            <div class="mt-3">
+                                <h4 class="mb-1 text-dark fw-bold">{{ $item->nama }}</h4>
+                                <p class="text-primary fw-bold text-uppercase mb-1" style="font-size: 0.9rem;">
+                                    {{ $item->prodi }} - {{ $item->angkatan }}
+                                </p>
+                                <div class="text-muted small italic px-3">{{ $item->pekerjaan }}</div>
+                            </div>
+                        </div>
+
+                        <div class="testimonial-text bg-light p-4 rounded position-relative">
+                            <i class="fa fa-quote-left text-primary mb-3 d-block mx-auto" style="font-size: 20px;"></i>
+                            <div class="text-dark fs-6 lh-base">
+                                {!! $item->kesan_pesan !!}
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
+
+    {{--    Tampilan Youtube --}}
+    <div class="youtube-header" style="display: flex; align-items: center; justify-content: center; margin-bottom: 20px; border-bottom: 2px solid #ff0000; padding-bottom: 10px;">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/e/ef/Youtube_logo.png" alt="YouTube Icon" style="height: 30px; margin-right: 15px;">
+        <h2 style="margin: 0; font-family: sans-serif; color: #333;">YouTube STTII Yogyakarta</h2>
+    </div>
+
+    <div id="video-container" class="video-grid">
+        <p>Sedang memuat video terbaru dari STTII Yogyakarta...</p>
     </div>
 
     <style>
@@ -359,10 +432,8 @@
         .news-card:hover .learn-more i {
             transform: translateX(5px);
         }
-    </style>
-    <!-- Courses End -->
 
-    <style>
+
         /* Mengatur agar gambar di dalamnya menyesuaikan lebar baru */
         .modal-content img {
             max-height: 500px !important; /* Menaikkan batas tinggi gambar */
@@ -400,6 +471,109 @@
         .carousel-control-next {
             z-index: 20 !important;
         }
+
+        /*STYLE UNTUK VIDEO YOUTUBE*/
+         .video-grid {
+             display: grid;
+             /* Mengatur agar maksimal 4 kolom di layar besar */
+             grid-template-columns: repeat(4, 1fr);
+             gap: 15px; /* Jarak antar video diperkecil */
+             padding: 10px 0;
+         }
+
+        /* Agar tetap bagus di HP (jadi 2 kolom) atau tablet */
+        @media (max-width: 992px) {
+            .video-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 480px) {
+            .video-grid { grid-template-columns: 1fr; }
+        }
+
+        .video-card {
+            background: #fff;
+            border-radius: 8px; /* Sudut lebih lancip sedikit agar simpel */
+            overflow: hidden;
+            border: 1px solid #eee; /* Border halus */
+            transition: 0.3s;
+            text-decoration: none;
+        }
+
+        .video-card:hover {
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .video-card img {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            display: block;
+        }
+
+        .video-card-body {
+            padding: 10px;
+        }
+
+        .video-title {
+            margin: 0;
+            font-size: 0.85rem; /* Ukuran font diperkecil */
+            font-weight: 600;
+            color: #333;
+            line-height: 1.3;
+            /* Judul maksimal 2 baris */
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* Awal style untuk cerita alumni */
+        .testimonial-carousel .owl-nav {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        .testimonial-carousel .owl-nav .owl-prev,
+        .testimonial-carousel .owl-nav .owl-next {
+            font-size: 20px;
+            width: 45px;
+            height: 45px;
+            line-height: 45px;
+            border-radius: 45px;
+            background: var(--bs-primary);
+            color: #ffffff;
+            margin: 0 10px;
+            transition: 0.3s;
+        }
+        .testimonial-carousel .owl-nav .owl-prev:hover,
+        .testimonial-carousel .owl-nav .owl-next:hover {
+            background: #000;
+        }
+        .testimonial-item {
+            transition: 0.3s;
+        }
+        .testimonial-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0.5rem 1.5rem rgba(0,0,0,0.1) !important;
+        }
+
+        .testimonial-carousel .owl-stage {
+            display: flex;
+        }
+
+        .testimonial-carousel .owl-item {
+            display: flex;
+            flex: 1 0 auto;
+        }
+
+        .testimonial-item {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .testimonial-text {
+            flex-grow: 1;
+        }
+        /* Akhir style untuk cerita alumni */
     </style>
 
     <script>
@@ -425,6 +599,7 @@
                 }
             };
         });
+
     </script>
 
 @endsection

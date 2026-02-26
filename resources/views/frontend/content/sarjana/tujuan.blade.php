@@ -11,7 +11,7 @@
                 <ol class="breadcrumb justify-content-center mb-0">
                     <li class="breadcrumb-item"><a class="text-white" href="{{ route('home.index') }}">Home</a></li>
                     <li class="breadcrumb-item"><a class="text-white" href="#">Akademik</a></li>
-                    <li class="breadcrumb-item text-primary active" aria-current="page">Tujuan & Sasaran</li>
+                    <li class="breadcrumb-item text-primary active" aria-current="page">Tujuan & Strategi</li>
                 </ol>
             </nav>
         </div>
@@ -67,8 +67,8 @@
                 <div class="col-lg-6 feature-text py-5 wow fadeIn" data-wow-delay="0.1s">
                     <div class="p-lg-5 ps-lg-0">
                         <h6 class="text-primary text-uppercase mb-3">Target Capaian</h6>
-                        <h1 class="display-6 mb-4">Sasaran Program Studi</h1>
-                        <p class="mb-4 pb-2">Prodi Sarjana Teologi menetapkan sasaran berikut dalam penyelenggaraan pendidikannya:</p>
+                        <h1 class="display-6 mb-4">Strategi Program Studi</h1>
+                        <p class="mb-4 pb-2">Prodi Sarjana Teologi menetapkan strategi berikut dalam penyelenggaraan pendidikannya:</p>
 
                         <div class="row g-4">
                             <div class="col-12">

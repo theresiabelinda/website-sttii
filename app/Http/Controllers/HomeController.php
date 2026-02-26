@@ -6,11 +6,12 @@ use App\Models\Berita;
 use App\Models\DokumenDoktor;
 use App\Models\DokumenMagister;
 use App\Models\DokumenSarjana;
-use App\Models\Kebijakan;
-use App\Models\Laporan;
+use App\Models\Header;
 use App\Models\Visitor;
 use App\Models\Dosen;
+use App\Models\Tendik;
 use App\Models\Footer;
+use App\Models\Cerita;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -24,20 +25,19 @@ class HomeController extends Controller
 
         $berita = Berita::where('id_kategori_kegiatan', '!=', 1)
             ->latest()
-            ->take(4)
+            ->take(8)
             ->get();
 
-        $popup_pmb = Berita::where('id_kategori_kegiatan', 1)
-            ->latest()
-            ->first();
+        $cerita = Cerita::latest()->take(8)->get();
 
         $footer_terbaru = Footer::latest()->first();
+        $header_terbaru = Header::latest()->first();
 
         Visitor::firstOrCreate([
             'ip_address' => request()->ip(),
             'visit_date' => now()->toDateString(),
         ]);
-        return view('frontend.content.home', compact('berita', 'berita_carousel', 'popup_pmb', 'footer_terbaru'));
+        return view('frontend.content.home', compact('berita', 'berita_carousel', 'footer_terbaru', 'header_terbaru','cerita'));
     }
 
     public function detail($id)
@@ -68,12 +68,14 @@ class HomeController extends Controller
 
     public function dosen()
     {
-        $dosen = Dosen::with(['bimbingan1', 'bimbingan2'])->get();
+        $dosen = Dosen::with(['bukuJurnal','bimbingan1', 'bimbingan2'])->get();
         return view('frontend.content.dosen', compact('dosen'));
     }
 
-    public function tendik(){
-        return view('frontend.content.tendik');
+    public function tendik()
+    {
+        $tendik = Tendik::all();
+        return view('frontend.content.tendik', compact('tendik'));
     }
 
     //Frontend S1
@@ -118,7 +120,6 @@ class HomeController extends Controller
 
     public function unduhS2()
     {
-        // Mengambil semua dokumen, urut dari yang terbaru
         $dokumen = DokumenMagister::latest()->paginate(5);
 
         return view('frontend.content.magister.unduh', compact('dokumen'));
@@ -164,16 +165,12 @@ class HomeController extends Controller
         return view('frontend.content.faq');
     }
 
-    public function kebijakan()
-    {
-        $kebijakan = Kebijakan::latest()->paginate(5);
-        return view('frontend.content.kebijakan', compact('kebijakan'));
+    public function perpus(){
+        return view('frontend.content.perpus');
     }
 
-    public function laporan()
-    {
-        $laporan = Laporan::latest()->paginate(5);
-        return view('frontend.content.laporan', compact('laporan'));
+    public function jogjaIstimewa(){
+        return view('frontend.content.jogjaIstimewa');
     }
 
     public function kumpulan()

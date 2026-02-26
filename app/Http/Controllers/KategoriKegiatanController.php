@@ -30,11 +30,6 @@ class KategoriKegiatanController extends Controller
         }
     }
 
-    public function ubah($id){
-        $kategori_kegiatan = KategoriKegiatan::findOrFail($id);
-        return view('backend.content.kategori_kegiatan.formUbah', compact('kategori_kegiatan'));
-    }
-
     public function prosesUbah(Request $request){
         $this->validate($request, [
             'id_kategori_kegiatan' => 'required',

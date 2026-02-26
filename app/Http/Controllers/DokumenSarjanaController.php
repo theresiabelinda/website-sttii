@@ -34,12 +34,6 @@ class DokumenSarjanaController extends Controller
         return redirect()->route('dokumen_sarjana.index')->with('success', 'Dokumen unggahan prodi S1 berhasil ditambahkan');
     }
 
-    public function ubah($id)
-    {
-        $dokumen_sarjana = DokumenSarjana::findOrFail($id);
-        return view('backend.content.dokumen_sarjana.formUbah', compact('dokumen_sarjana'));
-    }
-
     public function prosesUbah(Request $request)
     {
         $request->validate([

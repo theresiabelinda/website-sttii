@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Footer;
+use App\Models\Header;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 use App\Models\Berita;
@@ -17,6 +18,7 @@ class DashboardController extends Controller
         $pengunjung_hari_ini = Visitor::where('visit_date', now()->toDateString())->count();
 
         $data_footer = Footer::latest()->paginate(5);
+        $data_header = Header::latest()->paginate(5);
 
         $pengunjung_kemarin = Visitor::where('visit_date', now()->subDay()->toDateString())->count();
         $selisih = ($pengunjung_kemarin > 0) ? (($pengunjung_hari_ini - $pengunjung_kemarin) / $pengunjung_kemarin) * 100 : 0;
@@ -42,7 +44,8 @@ class DashboardController extends Controller
             'selisih',
             'data_grafik',
             'label_grafik',
-            'data_footer'
+            'data_footer',
+            'data_header'
         ));
     }
 
@@ -91,5 +94,52 @@ class DashboardController extends Controller
         $footer->delete();
 
         return redirect()->back()->with('success', 'Data Footer berhasil dihapus!');
+    }
+
+    public function tambahHeader(Request $request)
+    {
+        $request->validate([
+            'foto' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'tanggal_upload' => 'required|date'
+        ], [
+            'foto.required' => 'Foto wajib diunggah!',
+            'foto.image'    => 'File harus berupa gambar.',
+            'foto.max'      => 'Ukuran foto maksimal 2MB.',
+        ]);
+
+        try {
+            $nama_foto = null;
+            if ($request->hasFile('foto')) {
+                $file = $request->file('foto');
+
+                $nama_foto = time() . "_" . $file->getClientOriginalName();
+
+                $tujuan_upload = public_path('uploads/header');
+                $file->move($tujuan_upload, $nama_foto);
+            }
+            Header::create([
+                'tanggal_upload' => $request->tanggal_upload,
+                'foto'           => $nama_foto,
+            ]);
+
+            return redirect()->back()->with('success', 'Data Header berhasil ditambahkan! ✨');
+
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal mengunggah data: ' . $e->getMessage());
+        }
+    }
+
+    public function hapusHeader($id)
+    {
+        $header = Header::findOrFail($id);
+
+        $path = public_path('uploads/header/' . $header->foto);
+        if (File::exists($path)) {
+            File::delete($path);
+        }
+
+        $header->delete();
+
+        return redirect()->back()->with('success', 'Data Header berhasil dihapus!');
     }
 }

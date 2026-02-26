@@ -49,11 +49,6 @@ class DosenController extends Controller
         }
     }
 
-    public function ubah($id) {
-        $dosen = Dosen::findOrFail($id);
-        return view('backend.content.dosen.formUbah', compact('dosen'));
-    }
-
     public function prosesUbah(Request $request) {
         $this->validate($request, [
             'id'            => 'required',

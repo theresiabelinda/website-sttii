@@ -1,248 +1,365 @@
 @extends('backend/layout/main')
+
 @section('content')
-
-    <main>
-        <div class="container-fluid px-4">
-            <h1 class="mt-4 fw-bold">Dashboard</h1>
-            <ol class="breadcrumb mb-4">
-                <li class="breadcrumb-item active">Visualisasi Data & Manajemen Konten</li>
-            </ol>
-
-            <div class="row">
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="card border-0 shadow-sm h-100 stat-card" style="border-radius: 15px; background: linear-gradient(135deg, #e0e7ff 0%, #ffffff 100%);">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1" style="font-size: 0.75rem;">Total Pengunjung</div>
-                                    <div class="h4 mb-0 font-weight-bold text-gray-800">{{ number_format($total_pengunjung) }}</div>
-                                    <div class="mt-1">
-                                        @if($selisih >= 0)
-                                            <span class="text-success small fw-bold"><i class="fas fa-arrow-up"></i> {{ number_format($selisih, 1) }}%</span>
-                                        @else
-                                            <span class="text-danger small fw-bold"><i class="fas fa-arrow-down"></i> {{ number_format(abs($selisih), 1) }}%</span>
-                                        @endif
-                                    </div>
-                                </div>
-                                <div class="bg-primary p-3 rounded-3 shadow-sm">
-                                    <i class="fas fa-users fa-2x text-white"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="card border-0 shadow-sm h-100 stat-card" style="border-radius: 15px; background: linear-gradient(135deg, #dcfce7 0%, #ffffff 100%);">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1" style="font-size: 0.75rem;">Total Berita</div>
-                                    <div class="h4 mb-0 font-weight-bold text-gray-800">{{ $total_berita }}</div>
-                                    <div class="text-muted small mt-1">Aktif di sistem</div>
-                                </div>
-                                <div class="bg-success p-3 rounded-3 shadow-sm">
-                                    <i class="fas fa-newspaper fa-2x text-white"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <a href="{{ url('backend/foto-kegiatan') }}" class="text-decoration-none">
-                        <div class="card border-0 shadow-sm h-100 stat-card" style="border-radius: 15px; background: linear-gradient(135deg, #e0f2fe 0%, #ffffff 100%);">
-                            <div class="card-body d-flex align-items-center justify-content-between">
-                                <div>
-                                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Galeri Foto</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">Foto Kegiatan</div>
-                                </div>
-                                <div class="bg-info p-3 rounded-3 shadow-sm">
-                                    <i class="fas fa-images fa-2x text-white"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
+    <div class="container-fluid px-4">
+        <div class="d-flex align-items-center justify-content-between">
+            <div class="mt-4">
+                <h1 class="fw-bold">Dashboard</h1>
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item active">Visualisasi Data & Manajemen Konten</li>
+                </ol>
             </div>
+        </div>
 
-            <div class="row">
-                <div class="col-xl-8 col-lg-7">
-                    <div class="card shadow-sm mb-4" style="border-radius: 15px; border: none;">
-                        <div class="card-header bg-transparent py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">
-                                <i class="fas fa-chart-bar me-2"></i>Statistik Pengunjung Bulanan
-                            </h6>
-                        </div>
-                        <div class="card-body">
-                            <div style="height: 300px;">
-                                <canvas id="visitorChart"></canvas>
+        <div class="row">
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card stat-card card-gradient-primary h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <div class="stat-label text-primary">Total Pengunjung</div>
+                                <div class="h4 mb-0 fw-bold text-gray-800">{{ number_format($total_pengunjung) }}</div>
+                                <div class="mt-1">
+                                    @if($selisih >= 0)
+                                        <span class="text-success small fw-bold"><i class="fas fa-arrow-up"></i> {{ number_format($selisih, 1) }}%</span>
+                                    @else
+                                        <span class="text-danger small fw-bold"><i class="fas fa-arrow-down"></i> {{ number_format(abs($selisih), 1) }}%</span>
+                                    @endif
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xl-4 col-lg-5">
-                    <div class="card shadow-sm mb-4" style="border-radius: 15px; border: none;">
-                        <div class="card-header bg-transparent py-3">
-                            <h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-rocket me-2"></i>Akses Cepat</h6>
-                        </div>
-                        <div class="card-body p-0">
-                            <div class="list-group list-group-flush">
-                                <a href="#" class="list-group-item list-group-item-action py-3 px-4 border-0">
-                                    <i class="fas fa-plus-circle me-3 text-primary"></i> Tulis Berita Baru
-                                </a>
-                                <a href="{{ url('backend/foto-kegiatan') }}" class="list-group-item list-group-item-action py-3 px-4 border-0 border-top">
-                                    <i class="fas fa-camera me-3 text-info"></i> Upload Dokumentasi
-                                </a>
-                                <a href="{{ url('backend/footer') }}" class="list-group-item list-group-item-action py-3 px-4 border-0 border-top">
-                                    <i class="fas fa-cog me-3 text-warning"></i> Edit Kontak Footer
-                                </a>
+                            <div class="icon-box bg-primary">
+                                <i class="fas fa-users fa-2x text-white"></i>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-12">
-                    <div class="card shadow-sm mb-4" style="border-radius: 15px; border: none;">
-                        <div class="card-header bg-white py-3 d-flex align-items-center justify-content-between">
-                            <h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-table me-2"></i>Data Footer Terbaru</h6>
-
-                            <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalFooter">
-                                Tambah Footer
-                            </button>
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card stat-card card-gradient-success h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <div class="stat-label text-success">Total Berita</div>
+                                <div class="h4 mb-0 fw-bold text-gray-800">{{ $total_berita }}</div>
+                                <div class="text-muted small mt-1">Aktif di sistem</div>
+                            </div>
+                            <div class="icon-box bg-success">
+                                <i class="fas fa-newspaper fa-2x text-white"></i>
+                            </div>
                         </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered table-hover align-middle" width="100%" cellspacing="0">
-                                    <thead class="table-light">
-                                    <tr class="text-center">
-                                        <th width="5%">No</th>
-                                        <th width="20%">Tanggal Upload</th>
-                                        <th width="60%">Preview Foto</th>
-                                        <th width="15%">Aksi</th>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6 mb-4">
+                <a href="{{ url('backend/foto-kegiatan') }}" class="text-decoration-none">
+                    <div class="card stat-card card-gradient-info h-100">
+                        <div class="card-body d-flex align-items-center justify-content-between">
+                            <div>
+                                <div class="stat-label text-info">Galeri Foto</div>
+                                <div class="h5 mb-0 fw-bold text-gray-800">Foto Kegiatan</div>
+                            </div>
+                            <div class="icon-box bg-info">
+                                <i class="fas fa-images fa-2x text-white"></i>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+{{--        Table Tambah Footer--}}
+        <div class="row">
+            <div class="col-12">
+                <div class="card shadow-sm mb-4 custom-card">
+                    <div class="card-header bg-white py-3 d-flex align-items-center justify-content-between">
+                        <h6 class="m-0 fw-bold text-primary"><i class="fas fa-table me-2"></i>Data Footer Terbaru</h6>
+                        <button type="button" class="btn btn-success btn-sm rounded-pill px-3" data-bs-toggle="modal" data-bs-target="#modalFooter">
+                            <i class="me-1"></i> Tambah Footer
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle">
+                                <thead class="table-custom-header">
+                                <tr class="text-center">
+                                    <th width="5%">No</th>
+                                    <th width="20%">Tanggal Upload</th>
+                                    <th width="60%">Preview Foto</th>
+                                    <th width="15%">Aksi</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @forelse($data_footer ?? [] as $index => $item)
+                                    <tr>
+                                        <td class="text-center">{{ $index + 1 }}</td>
+                                        <td class="text-center">{{ \Carbon\Carbon::parse($item->tanggal_upload)->format('d M Y') }}</td>
+                                        <td class="text-center">
+                                            @if($item->foto)
+                                                <img src="{{ asset('uploads/footer/'.$item->foto) }}" class="img-preview-table" alt="foto">
+                                            @else
+                                                <span class="text-muted small fst-italic">Tidak ada foto</span>
+                                            @endif
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="{{ route('dashboard.hapus', $item->id_footer) }}"
+                                               class="btn btn-outline-danger btn-sm btn-hapus"
+                                               title="Hapus">
+                                                <i class="fa fa-trash"></i>
+                                            </a>
+                                        </td>
                                     </tr>
-                                    </thead>
-                                    <tbody>
-                                    @forelse($data_footer ?? [] as $index => $item)
-                                        <tr>
-                                            <td class="text-center">{{ $index + 1 }}</td>
-                                            <td class="text-center">{{ \Carbon\Carbon::parse($item->tanggal_upload)->format('d M Y') }}</td>
-                                            <td class="text-center">
-                                                @if($item->foto)
-                                                    <img src="{{ asset('uploads/footer/'.$item->foto) }}" alt="foto"
-                                                         style="max-height: 80px; width: 100%; max-width: 400px; border-radius: 8px; object-fit: contain; border: 1px solid #eee;">
-                                                @else
-                                                    <span class="text-muted small italic">Tidak ada foto</span>
-                                                @endif
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="btn-group shadow-sm">
-                                                    <a href="{{ route('dashboard.hapus', $item->id_footer) }}"
-                                                       class="btn btn-outline-danger btn-sm border"
-                                                       onclick="return confirm('Hapus data footer ini?')"
-                                                       title="Hapus">
-                                                        <i class="fa fa-trash"></i>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    @empty
-                                        <tr>
-                                            <td colspan="4" class="text-center text-muted py-4">
-                                                <i class="mb-2 d-block fa-2x"></i>
-                                                Belum ada data footer.
-                                            </td>
-                                        </tr>
-                                    @endforelse
-                                    </tbody>
-                                </table>
-                            </div>
-
-                                <!-- Awal Modal -->
-                                <div class="modal fade" id="modalFooter" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <form action="{{ route('dashboard.prosesTambah') }}" method="POST" enctype="multipart/form-data">
-                                            @csrf
-                                            <div class="modal-content border-0 shadow-lg" style="border-radius: 15px;">
-                                                <div class="modal-header" style="border-top-left-radius: 15px; border-top-right-radius: 15px;">
-                                                    <h5 class="modal-title" id="staticBackdropLabel">Tambah Footer</h5>
-                                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body p-4">
-                                                    <div class="mb-3">
-                                                        <label for="tanggal_upload" class="form-label fw-bold">Tanggal Upload</label>
-                                                        <input type="date" name="tanggal_upload" id="tanggal_upload" class="form-control" required value="{{ date('Y-m-d') }}">
-                                                        <small class="text-muted">Pilih tanggal publikasi footer.</small>
-                                                    </div>
-
-                                                    <div class="mb-3">
-                                                        <label for="foto" class="form-label fw-bold">Upload Foto Footer</label>
-                                                        <input type="file" name="foto" id="foto" class="form-control" accept="image/*" required>
-                                                        <div class="form-text">Format: JPG, PNG, JPEG. Maks: 2MB.</div>
-                                                    </div>
-
-                                                    <div class="mt-3 text-center d-none" id="previewContainer">
-                                                        <p class="small text-muted mb-1">Preview:</p>
-                                                        <img id="imagePreview" src="#" alt="preview" style="max-height: 150px; border-radius: 10px; border: 2px solid #ddd;">
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer bg-light" style="border-bottom-left-radius: 15px; border-bottom-right-radius: 15px;">
-                                                    <button type="submit" class="btn btn-success px-4"><i class="fas fa-save me-1"></i> Simpan</button>
-                                                    <button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal">Batal</button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                                <!-- Akhir Modal -->
-
-                            </div>
+                                @empty
+                                    <tr>
+                                        <td colspan="4" class="text-center text-muted py-5">Belum ada data footer.</td>
+                                    </tr>
+                                @endforelse
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </main>
+    </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{{--    Modal Footer--}}
+    <div class="modal fade" id="modalFooter" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <form action="{{ route('dashboard.prosesTambah') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-content border-0 shadow-lg" style="border-radius: 15px;">
+                    <div class="modal-header bg-success text-white">
+                        <h5 class="modal-title">Tambah Footer</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body p-4">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Tanggal Upload</label>
+                            <input type="date" name="tanggal_upload" class="form-control" required value="{{ date('Y-m-d') }}">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Upload Foto Footer</label>
+                            <input type="file" name="foto" id="fotoInput" class="form-control" accept="image/*" required>
+                            <div class="form-text">Format: JPG, PNG, JPEG. Maks: 2MB.</div>
+                        </div>
+                        <div class="mt-3 text-center d-none" id="previewContainer">
+                            <p class="small text-muted mb-1">Preview:</p>
+                            <img id="imagePreview" src="#" class="img-fluid rounded border" style="max-height: 150px;">
+                        </div>
+                    </div>
+                    <div class="modal-footer bg-light">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-success px-4"><i class="fas fa-save me-1"></i> Simpan</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 
-    <script>
-        const ctx = document.getElementById('visitorChart').getContext('2d');
+{{--    Modal Header--}}
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm mb-4 custom-card">
+                <div class="card-header bg-white py-3 d-flex align-items-center justify-content-between">
+                    <h6 class="m-0 fw-bold text-primary"><i class="fas fa-table me-2"></i>Data Header Terbaru</h6>
+                    <button type="button" class="btn btn-success btn-sm rounded-pill px-3" data-bs-toggle="modal" data-bs-target="#modalTambahHeader">
+                        <i class="me-1"></i> Tambah Header
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-custom-header">
+                            <tr class="text-center">
+                                <th width="5%">No</th>
+                                <th width="20%">Tanggal Upload</th>
+                                <th width="60%">Preview Foto</th>
+                                <th width="15%">Aksi</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @forelse($data_header ?? [] as $index => $item)
+                                <tr>
+                                    <td class="text-center">{{ $index + 1 }}</td>
+                                    <td class="text-center">{{ \Carbon\Carbon::parse($item->tanggal_upload)->format('d M Y') }}</td>
+                                    <td class="text-center">
+                                        @if($item->foto)
+                                            <img src="{{ asset('uploads/header/'.$item->foto) }}" class="img-preview-table" alt="foto">
+                                        @else
+                                            <span class="text-muted small fst-italic">Tidak ada foto</span>
+                                        @endif
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="{{ route('dashboard.hapusHeader', $item->id_header) }}"
+                                           class="btn btn-outline-danger btn-sm btn-hapus"
+                                           title="Hapus">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="4" class="text-center text-muted py-5">Belum ada data header .</td>
+                                </tr>
+                            @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
 
-        new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: {!! json_encode($label_grafik) !!},
-                datasets: [{
-                    label: 'Jumlah Penonton',
-                    data: {!! json_encode($data_grafik) !!},
-                    backgroundColor: '#6c5ce7',
-                    borderRadius: 5,
-                }]
-            },
-            options: {
-                maintainAspectRatio: false,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        min: 0,
-                        max: 10000,
-                        ticks: {
-                            stepSize: 2000
-                        }
-                    }
+    <div class="modal fade" id="modalTambahHeader" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <form action="{{ route('dashboard.tambahHeader') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-content border-0 shadow-lg" style="border-radius: 15px;">
+                    <div class="modal-header bg-success text-white">
+                        <h5 class="modal-title">Tambah Header</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body p-4">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Tanggal Upload</label>
+                            <input type="date" name="tanggal_upload" class="form-control" required value="{{ date('Y-m-d') }}">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Upload Foto Footer</label>
+                            <input type="file" name="foto" id="fotoInput" class="form-control" accept="image/*" required>
+                            <div class="form-text">Format: JPG, PNG, JPEG. Maks: 2MB.</div>
+                        </div>
+                        <div class="mt-3 text-center d-none" id="previewContainer">
+                            <p class="small text-muted mb-1">Preview:</p>
+                            <img id="imagePreview" src="#" class="img-fluid rounded border" style="max-height: 150px;">
+                        </div>
+                    </div>
+                    <div class="modal-header bg-light">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-success px-4"><i class="fas fa-save me-1"></i> Simpan</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    @push('scripts')
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            // Chart Setup
+            const ctx = document.getElementById('visitorChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: {!! json_encode($label_grafik) !!},
+                    datasets: [{
+                        label: 'Jumlah Penonton',
+                        data: {!! json_encode($data_grafik) !!},
+                        backgroundColor: '#6c5ce7',
+                        borderRadius: 5,
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    scales: { y: { beginAtZero: true } }
+                }
+            });
+
+            // Image Preview Logic
+            document.getElementById('fotoInput').onchange = evt => {
+                const [file] = evt.target.files;
+                if (file) {
+                    document.getElementById('previewContainer').classList.remove('d-none');
+                    document.getElementById('imagePreview').src = URL.createObjectURL(file);
                 }
             }
-        });
-    </script>
+
+            $(document).ready(function() {
+                // Fungsi Preview Gambar Instan
+                $('#inputFoto').change(function() {
+                    const file = this.files[0];
+                    if (file) {
+                        let reader = new FileReader();
+                        reader.onload = function(e) {
+                            $('#imgPreview').attr('src', e.target.result).removeClass('d-none');
+                            $('#placeholderText').addClass('d-none');
+                        }
+                        reader.readAsDataURL(file);
+                    }
+                });
+
+                // Proses Simpan via AJAX
+                $('#formHeader').on('submit', function(e) {
+                    e.preventDefault();
+
+                    let formData = new FormData(this);
+                    $('#btnSimpan').prop('disabled', true).html('<i class="fa fa-spinner fa-spin me-2"></i>Mengirim...');
+
+                    $.ajax({
+                        url: "{{ route('dashboard.tambahHeader') }}", // Sesuaikan dengan nama route di web.php
+                        type: "POST",
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        success: function(response) {
+                            // Notifikasi Sukses
+                            alert("Data Berhasil Disimpan!");
+
+                            // Reset Form & Close Modal
+                            $('#modalTambahHeader').modal('hide');
+                            $('#formHeader')[0].reset();
+                            $('#imgPreview').addClass('d-none');
+                            $('#placeholderText').removeClass('d-none');
+                            $('#btnSimpan').prop('disabled', false).text('Simpan Data');
+
+                            // Opsional: Reload halaman atau update tabel otomatis
+                            location.reload();
+                        },
+                        error: function(xhr) {
+                            alert("Gagal menyimpan data. Pastikan file adalah gambar.");
+                            $('#btnSimpan').prop('disabled', false).text('Simpan Data');
+                        }
+                    });
+                });
+            });
+
+            $(document).on('click', '.btn-hapus', function(e) {
+                e.preventDefault();
+                const href = $(this).attr('href');
+
+                Swal.fire({
+                    title: 'Apakah Anda yakin?',
+                    text: "Data yang dihapus tidak dapat dikembalikan!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, Hapus!',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = href;
+                    }
+                })
+            });
+        </script>
+    @endpush
 
     <style>
-        .stat-card { transition: all 0.2s; }
+        .custom-card { border-radius: 15px; border: none; }
+        .stat-card { border-radius: 15px; border: 0; transition: transform 0.2s; box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.075); }
         .stat-card:hover { transform: translateY(-5px); box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.1) !important; }
-    </style>
+        .stat-label { font-size: 0.75rem; text-transform: uppercase; font-weight: bold; margin-bottom: 0.25rem; }
 
+        .card-gradient-primary { background: linear-gradient(135deg, #e0e7ff 0%, #ffffff 100%); }
+        .card-gradient-success { background: linear-gradient(135deg, #dcfce7 0%, #ffffff 100%); }
+        .card-gradient-info { background: linear-gradient(135deg, #e0f2fe 0%, #ffffff 100%); }
+
+        .icon-box { padding: 1rem; border-radius: 0.75rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+        .table-custom-header { background: linear-gradient(90deg, #5a67d8 0%, #4c51bf 100%); color: white; }
+        .img-preview-table { max-height: 80px; width: 100%; max-width: 200px; border-radius: 8px; object-fit: contain; border: 1px solid #eee; }
+    </style>
 @endsection

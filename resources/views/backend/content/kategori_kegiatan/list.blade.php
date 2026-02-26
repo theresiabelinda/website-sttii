@@ -8,9 +8,8 @@
                 <p class="text-muted small mb-0">Kelola pengelompokan berita dan aktivitas kampus.</p>
             </div>
 
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalKategori">
-                Tambah Kategori
+            <button type="button" class="btn btn-success shadow-sm" style="border-radius: 10px;" data-bs-toggle="modal" data-bs-target="#modalKategori">
+                <i class="mr-1"></i> Tambah Kategori
             </button>
         </div>
 
@@ -23,11 +22,11 @@
             </div>
         @endif
 
-        <div class="card shadow border-0 overflow-hidden">
+        <div class="card shadow border-0 overflow-hidden" style="border-radius: 15px;">
             <div class="card-body p-0">
                 <div class="table-responsive">
                     <table class="table table-hover mb-0" id="dataTable" width="100%">
-                        <thead class="bg-light text-dark">
+                        <thead style="background: linear-gradient(90deg, #5a67d8 0%, #4c51bf 100%); color: white;">
                         <tr>
                             <th class="py-3 border-0 text-center" width="70">No</th>
                             <th class="py-3 border-0">Nama Kategori</th>
@@ -43,21 +42,23 @@
                                 <td class="align-middle">
                                     <div class="d-flex align-items-center">
                                         <div class="category-icon mr-3">
-                                            <i class="fas fa-tag text-primary"></i>
+                                            <i class="fas fa-tag" style="color: #5a67d8;"></i>
                                         </div>
                                         <span class="font-weight-bold text-dark">{{ $row->nama_kategori_kegiatan }}</span>
                                     </div>
                                 </td>
                                 <td class="align-middle text-center">
                                     <div class="action-buttons">
-                                        <a href="{{ route('kategori_kegiatan.ubah', $row->id_kategori_kegiatan) }}"
-                                           class="btn btn-sm btn-outline-warning mx-1 shadow-sm"
-                                           title="Ubah">
+                                        <button type="button"
+                                                class="btn btn-sm btn-outline-warning mx-1 shadow-sm edit-button"
+                                                data-bs-toggle="modal" data-bs-target="#modalEditKategori"
+                                                data-id="{{ $row->id_kategori_kegiatan }}"
+                                                data-nama="{{ $row->nama_kategori_kegiatan }}"
+                                                title="Ubah">
                                             <i class="fa fa-edit"></i> Ubah
-                                        </a>
+                                        </button>
                                         <a href="{{ route('kategori_kegiatan.hapus', $row->id_kategori_kegiatan) }}"
-                                           onclick="return confirm('Hapus kategori ini?')"
-                                           class="btn btn-sm btn-outline-danger mx-1 shadow-sm"
+                                           class="btn btn-sm btn-outline-danger mx-1 shadow-sm btn-delete"
                                            title="Hapus">
                                             <i class="fa fa-trash"></i> Hapus
                                         </a>
@@ -67,44 +68,66 @@
                         @endforeach
                         </tbody>
                     </table>
-
-                    <!-- Awal Modal Tambah -->
-                    <div class="modal fade" id="modalKategori" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="staticBackdropLabel">Form Tambah Kategori</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <form method="POST" action="{{ route('kategori_kegiatan.prosesTambah') }}">
-                                    @csrf
-                                        <div class="mb-3">
-                                            <label class="form-label">Nama Kategori</label>
-                                            <input type="text" name="nama_kategori_kegiatan" value="{{old('nama_kategori_kegiatan')}}" class="form-control @error('nama_kategori_kegiatan') is-invalid @enderror">
-                                            @error('nama_kategori_kegiatan')
-                                            <span style="color: red; font-weight: 600; font-size: 9pt">{{$message}}</span>
-                                            @enderror
-                                        </div>
-
-                                        <div class="modal-footer">
-                                            <button type="submit" class="btn btn-primary">Simpan</button>
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Akhir Modal Tambah -->
-
                 </div>
             </div>
         </div>
     </div>
 
+    <div class="modal fade" id="modalKategori" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" style="border-radius: 15px; overflow: hidden;">
+                <div class="modal-header">
+                    <h5 class="modal-title">Form Tambah Kategori</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <form method="POST" action="{{ route('kategori_kegiatan.prosesTambah') }}">
+                        @csrf
+                        <div class="mb-3">
+                            <label class="form-label font-weight-bold">Nama Kategori</label>
+                            <input type="text" name="nama_kategori_kegiatan" value="{{old('nama_kategori_kegiatan')}}" class="form-control rounded-pill @error('nama_kategori_kegiatan') is-invalid @enderror" placeholder="Masukkan nama kategori...">
+                            @error('nama_kategori_kegiatan')
+                            <span style="color: red; font-weight: 600; font-size: 9pt">{{$message}}</span>
+                            @enderror
+                        </div>
+
+                        <div class="modal-footer border-0 px-0 pb-0">
+                            <button type="button" class="btn btn-secondary rounded-pill px-4" data-bs-dismiss="modal">Tutup</button>
+                            <button type="submit" class="btn btn-primary rounded-pill px-4">Simpan</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalEditKategori" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content shadow border-0" style="border-radius: 15px; overflow: hidden;">
+                <div class="modal-header text-dark">
+                    <h5 class="modal-title font-weight-bold">Edit Kategori Kegiatan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form method="POST" id="formEditKategori" action="{{ route('kategori_kegiatan.prosesUbah') }}">
+                    @csrf
+                    <div class="modal-body p-4">
+                        <input type="hidden" name="id_kategori_kegiatan" id="edit_id">
+                        <div class="mb-3">
+                            <label class="font-weight-bold">Nama Kategori</label>
+                            <input type="text" name="nama_kategori_kegiatan" id="edit_nama" class="form-control rounded-pill" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer border-0 px-0 pb-0 mx-3 mb-3">
+                        <button type="button" class="btn btn-secondary rounded-pill px-4" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-warning font-weight-bold rounded-pill px-4 text-dark">Update Data</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <style>
-        /* Styling Header Tabel */
+        /* Styling tambahan agar lebih clean */
         .table thead th {
             font-size: 0.8rem;
             text-transform: uppercase;
@@ -112,7 +135,6 @@
             font-weight: 700;
         }
 
-        /* Efek Hover Baris */
         .table tbody tr {
             transition: all 0.3s ease;
         }
@@ -123,7 +145,6 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         }
 
-        /* Icon Dekoratif */
         .category-icon {
             width: 35px;
             height: 35px;
@@ -134,12 +155,46 @@
             justify-content: center;
         }
 
-        /* Custom Buttons */
         .btn-outline-warning:hover { color: #fff !important; }
         .btn-outline-danger:hover { color: #fff !important; }
 
-        .shadow-sm {
-            box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
+        .rounded-pill {
+            border-radius: 50px !important;
         }
     </style>
+
+    <script>
+        // SweetAlert Delete
+        document.addEventListener('click', function (e) {
+            if (e.target.closest('.btn-delete')) {
+                e.preventDefault();
+                const anchor = e.target.closest('.btn-delete');
+                const href = anchor.getAttribute('href');
+                Swal.fire({
+                    title: 'Hapus Data?',
+                    text: "Data ini akan dihapus permanen!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#5a67d8', /* Tombol konfirmasi jadi ungu juga */
+                    cancelButtonColor: '#858796',
+                    confirmButtonText: 'Ya, Hapus!',
+                    cancelButtonText: 'Batal',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed) window.location.href = href;
+                });
+            }
+        });
+
+        // Ajax ubah
+        document.addEventListener('DOMContentLoaded', function () {
+            const editButtons = document.querySelectorAll('.edit-button');
+            editButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    document.getElementById('edit_id').value = this.getAttribute('data-id');
+                    document.getElementById('edit_nama').value = this.getAttribute('data-nama');
+                });
+            });
+        });
+    </script>
 @endsection

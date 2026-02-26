@@ -1,13 +1,6 @@
 @extends('frontend.layout.main')
 
 @section('content')
-
-    {{--
-        PERUBAHAN DI HEADER:
-        Saya mengganti style background color menjadi url gambar.
-        - linear-gradient(...): Memberikan efek gelap transparan di atas gambar agar tulisan terbaca.
-        - url('...'): Mengarah ke file gambar. Saya pakai carousel-1.jpg sebagai contoh.
-    --}}
     <div class="container-fluid page-header py-6 my-6 mt-0 wow fadeIn" data-wow-delay="0.1s"
          style="background: linear-gradient(rgba(0, 0, 0, .75), rgba(0, 0, 0, .75)), url('{{ asset('assets/assets/img/foto-sttii.jpg') }}') center center no-repeat; background-size: cover;">
         <div class="container text-center">

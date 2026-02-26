@@ -17,7 +17,7 @@
                         <img class="img-fluid w-100 rounded shadow"
                              src="{{ route('storage', ['filename' => $berita->gambar_berita]) }}"
                              alt="{{ $berita->judul_berita }}"
-                             style="max-height: 500px; width: 100%; object-fit: cover;">
+                             style="max-height: 600px; width: auto; display: block; margin: 0 auto; object-fit: contain;">
                     </div>
 
                     <div class="content" style="line-height: 2; font-size: 1.1rem; color: #333;">

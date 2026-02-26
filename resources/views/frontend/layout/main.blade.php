@@ -179,44 +179,35 @@
             </div>
 
             <div class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Akademik</a>
-
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">S1 Teologi</a>
                 <div class="dropdown-menu bg-light m-0">
+                    <a href="{{route('home.profils1')}}" class="dropdown-item">Profil</a>
+                    <a href="{{route('home.visis1')}}" class="dropdown-item">Visi Misi</a>
+                    <a href="{{route('home.tujuan')}}" class="dropdown-item">Tujuan & Strategi</a>
+                    <a href="{{route('home.konsentrasi')}}" class="dropdown-item">Konsentrasi</a>
+                    <a href="{{route('home.unduhS1')}}" class="dropdown-item">Unduhan</a>
+                </div>
+            </div>
 
-                    <div class="dropdown-item dropdown-submenu">
-                        <a href="#" class="text-dark text-decoration-none d-block">Prodi Sarjana Teologi</a>
+            <div class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">S2 Teologi</a>
+                <div class="dropdown-menu bg-light m-0">
+                    <a href="{{route('home.profils2')}}" class="dropdown-item">Profil</a>
+                    <a href="{{route('home.visis2')}}" class="dropdown-item">Visi Misi</a>
+                    <a href="{{route('home.tujuans2')}}" class="dropdown-item">Tujuan & Strategi</a>
+                    <a href="{{route('home.konsentrasis2')}}" class="dropdown-item">Konsentrasi</a>
+                    <a href="{{route('home.unduhS2')}}" class="dropdown-item">Unduhan</a>
+                </div>
+            </div>
 
-                        <ul class="dropdown-menu submenu">
-                            <li><a href="{{route('home.profils1')}}" class="dropdown-item">Profil</a></li>
-                            <li><a href="{{route('home.visis1')}}" class="dropdown-item">Visi Misi</a></li>
-                            <li><a href="{{route('home.tujuan')}}" class="dropdown-item">Tujuan Sasaran</a></li>
-                            <li><a href="{{route('home.konsentrasi')}}" class="dropdown-item">Konsentrasi</a></li>
-                            <li><a href="{{route('home.unduhS1')}}" class="dropdown-item">Unduh</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="dropdown-item dropdown-submenu">
-                        <a href="#" class="text-dark text-decoration-none d-block">Prodi Magister Teologi</a>
-                        <ul class="dropdown-menu submenu">
-                            <li><a href="{{route('home.profils2')}}" class="dropdown-item">Profil</a></li>
-                            <li><a href="{{route('home.visis2')}}" class="dropdown-item">Visi Misi</a></li>
-                            <li><a href="{{route('home.tujuans2')}}" class="dropdown-item">Tujuan Sasaran</a></li>
-                            <li><a href="{{route('home.konsentrasis2')}}" class="dropdown-item">Konsentrasi</a></li>
-                            <li><a href="{{route('home.unduhS2')}}" class="dropdown-item">Unduh</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="dropdown-item dropdown-submenu">
-                        <a href="#" class="text-dark text-decoration-none d-block">Prodi Doktor Teologi</a>
-                        <ul class="dropdown-menu submenu">
-                            <li><a href="{{route('home.profils3')}}" class="dropdown-item">Profil</a></li>
-                            <li><a href="{{route('home.visis3')}}" class="dropdown-item">Visi Misi</a></li>
-                            <li><a href="{{route('home.tujuans3')}}" class="dropdown-item">Tujuan Sasaran</a></li>
-                            <li><a href="{{route('home.konsentrasis3')}}" class="dropdown-item">Konsentrasi</a></li>
-                            <li><a href="{{route('home.unduhS3')}}" class="dropdown-item">Unduh</a></li>
-                        </ul>
-                    </div>
-
+            <div class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">S3 Teologi</a>
+                <div class="dropdown-menu bg-light m-0">
+                    <a href="{{route('home.profils3')}}" class="dropdown-item">Profil</a>
+                    <a href="{{route('home.visis3')}}" class="dropdown-item">Visi Misi</a>
+                    <a href="{{route('home.tujuans3')}}" class="dropdown-item">Tujuan & Strategi</a>
+                    <a href="{{route('home.konsentrasis3')}}" class="dropdown-item">Konsentrasi</a>
+                    <a href="{{route('home.unduhS3')}}" class="dropdown-item">Unduhan</a>
                 </div>
             </div>
 
@@ -226,6 +217,8 @@
                     <a href="{{route('berita.kumpulan')}}" class="dropdown-item">Kegiatan Kampus</a>
                     <a href="{{route('home.fasilitas')}}" class="dropdown-item">Fasilitas</a>
                     <a href="https://semasttiijogja.site/" class="dropdown-item">Senat Mahasiswa</a>
+                    <a href="https://tracerstudy.kemdiktisaintek.go.id/" class="dropdown-item">Tracer Study</a>
+                    <a href="{{route('home.perpus')}}" class="dropdown-item">Perpustakaan</a>
                 </div>
             </div>
 
@@ -235,24 +228,8 @@
                     <a href="#" class="dropdown-item">Pendaftaran Mahasiswa Baru</a>
                     <a href="{{route('home.beasiswa')}}" class="dropdown-item">Beasiswa</a>
                     <a href="{{route('home.asrama')}}" class="dropdown-item">Asrama</a>
+                    <a href="{{route('home.jogjaIstimewa')}}" class="dropdown-item">Jogja Istimewa</a>
                     <a href="{{route('home.faq')}}" class="dropdown-item">Frequently Asked Questions (FAQ)</a>
-                </div>
-            </div>
-
-            <div class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Alumni</a>
-                <div class="dropdown-menu bg-light m-0">
-                    <a href="https://tracerstudy.kemdiktisaintek.go.id/" class="dropdown-item">Tracer Study</a>
-                    <a href="appointment.html" class="dropdown-item">Ikatan Alumni</a>
-                    <a href="#" class="dropdown-item">Cerita Alumni</a>
-                </div>
-            </div>
-
-            <div class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Penelitian</a>
-                <div class="dropdown-menu bg-light m-0">
-                    <a href="https://pistis.sttii-yogyakarta.ac.id/" class="dropdown-item">Jurnal Pistis: Teologi dan Praktika</a>
-                    <a href="https://www.ejournal.sttii-yogyakarta.ac.id/" class="dropdown-item">Jurnal Predica Verbum: Jurnal Teologi & Misi</a>
                 </div>
             </div>
 
@@ -267,7 +244,9 @@
                     <a href="https://elearning.sttii-yogyakarta.ac.id/" class="dropdown-item">E-Learning</a>
                     <a href="https://epustaka.sttii-yogyakarta.ac.id/" class="dropdown-item">E-Pustaka</a>
                 </div>
+            </div>
        </div>
+    </div>
 </nav>
 <!-- Navbar End -->
 
@@ -300,14 +279,12 @@
                 {{-- Jarak antar link diperpendek dengan g-2 dan padding kecil --}}
                 <div class="row g-2">
                     <div class="col-6">
-                        <a class="btn btn-link text-dark small p-0 mb-1 d-block" href="{{route('home.kebijakan')}}">Kebijakan SPMI</a>
-                        <a class="btn btn-link text-dark small p-0 mb-1 d-block" href="{{route('home.laporan')}}">Laporan SPMI</a>
                         <a class="btn btn-link text-dark small p-0 mb-1 d-block" href="{{route('berita.kumpulan')}}">Berita</a>
+                        <a class="btn btn-link text-dark small p-0 mb-1 d-block" href="">Pusdatin</a>
                     </div>
                     <div class="col-6">
                         <a class="btn btn-link text-dark small p-0 mb-1 d-block" href="">Biro Adak</a>
                         <a class="btn btn-link text-dark small p-0 mb-1 d-block" href="">P3S</a>
-                        <a class="btn btn-link text-dark small p-0 mb-1 d-block" href="">Pusdatin</a>
                     </div>
                 </div>
 
@@ -400,11 +377,6 @@
     </button>
 </div>
 
-
-<!-- Back to Top -->
-<a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
-
-
 <!-- JavaScript Libraries -->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -413,8 +385,78 @@
 <script src="{{asset('assets-fe/lib/waypoints/waypoints.min.js')}}"></script>
 <script src="{{asset('assets-fe/lib/owlcarousel/owl.carousel.min.js')}}"></script>
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+
 <!-- Template Javascript -->
 <script src="{{asset('assets-fe/js/main.js')}}"></script>
+
+<script>
+    const API_KEY = 'AIzaSyBVJv5szKHPKYIrH6hHh4ned2VZzmBZVvQ';
+    const PLAYLIST_ID = 'UUSHM0Pq78ubRTspvXpmq2-g';
+    const CACHE_KEY = 'sttii_video_cache';
+    const CACHE_TIME = 60 * 60 * 1000; // 1 jam
+
+    async function getLatestVideos() {
+        const now = new Date().getTime();
+        const cachedData = localStorage.getItem(CACHE_KEY);
+
+        if (cachedData) {
+            const parsedCache = JSON.parse(cachedData);
+            // CEK APAKAH JUMLAH VIDEO DI CACHE SUDAH 4?
+            // Jika masih 3, kita paksa ambil ulang (fetch)
+            if (now - parsedCache.timestamp < CACHE_TIME && parsedCache.videos.length === 4) {
+                console.log("Mengambil data dari Cache (4 Video)");
+                renderVideos(parsedCache.videos);
+                return;
+            }
+        }
+
+        console.log("Memanggil API YouTube untuk 4 video...");
+        // PASTIKAN DI SINI maxResults=4
+        const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${PLAYLIST_ID}&maxResults=4&key=${API_KEY}`;
+
+        try {
+            const response = await fetch(url);
+            const data = await response.json();
+            const videos = data.items;
+
+            localStorage.setItem(CACHE_KEY, JSON.stringify({
+                timestamp: now,
+                videos: videos
+            }));
+
+            renderVideos(videos);
+        } catch (error) {
+            console.error("Gagal mengambil video:", error);
+        }
+    }
+
+    function renderVideos(videos) {
+        const container = document.getElementById('video-container');
+        if (!container) return;
+
+        container.innerHTML = '';
+
+        videos.forEach(item => {
+            const videoId = item.snippet.resourceId.videoId;
+            const title = item.snippet.title;
+            const thumb = item.snippet.thumbnails.high.url;
+
+            const html = `
+            <div class="video-card">
+                <a href="https://www.youtube.com/watch?v=${videoId}" target="_blank" style="text-decoration:none;">
+                    <img src="${thumb}" alt="${title}">
+                    <div class="video-card-body">
+                        <p class="video-title">${title}</p>
+                    </div>
+                </a>
+            </div>
+            `;
+            container.innerHTML += html;
+        });
+    }
+
+    getLatestVideos();</script>
 </body>
 
 </html>

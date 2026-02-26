@@ -14,11 +14,6 @@ class DokumenMagisterController extends Controller
         return view('backend.content.dokumen_magister.list', compact('data'));
     }
 
-    public function tambah()
-    {
-        return view('backend.content.dokumen_magister.formTambah');
-    }
-
     public function prosesTambah(Request $request)
     {
         $request->validate([
@@ -37,12 +32,6 @@ class DokumenMagisterController extends Controller
         ]);
 
         return redirect()->route('dokumen_magister.index')->with('success', 'Dokumen unggahan prodi S2 berhasil ditambahkan');
-    }
-
-    public function ubah($id)
-    {
-        $dokumen_magister = DokumenMagister::findOrFail($id);
-        return view('backend.content.dokumen_magister.formUbah', compact('dokumen_magister'));
     }
 
     public function prosesUbah(Request $request)
